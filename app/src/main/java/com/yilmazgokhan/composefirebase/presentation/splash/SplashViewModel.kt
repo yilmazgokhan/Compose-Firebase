@@ -1,10 +1,12 @@
 package com.yilmazgokhan.composefirebase.presentation.splash
 
+import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.LogUtils
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +20,13 @@ class SplashViewModel @Inject constructor(
     override fun createInitialState(): SplashViewState = SplashViewState()
 
     override fun onTriggerEvent(event: SplashViewEvent) {
-        TODO("Not yet implemented")
+        viewModelScope.launch {
+            when (event) {
+                SplashViewEvent.SplashEvent -> {
+                    LogUtils.d("$this")
+                }
+            }
+        }
     }
 }
 

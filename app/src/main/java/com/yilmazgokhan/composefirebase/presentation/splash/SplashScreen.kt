@@ -3,6 +3,7 @@ package com.yilmazgokhan.composefirebase.presentation.splash
 import android.annotation.SuppressLint
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.airbnb.lottie.compose.LottieAnimation
@@ -10,6 +11,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.yilmazgokhan.composefirebase.R
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -20,11 +22,12 @@ fun SplashScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    //Loader()
+    Loader()
 
-    Text(text = "adasdasdasd")
-
-
+    LaunchedEffect(true) {
+        delay(2000)
+        navigateToHome()
+    }
 }
 
 @Composable

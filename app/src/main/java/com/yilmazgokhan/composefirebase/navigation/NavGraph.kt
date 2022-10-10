@@ -6,9 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.yilmazgokhan.composefirebase.presentation.login.LoginScreen
 import com.yilmazgokhan.composefirebase.presentation.register.RegisterScreen
@@ -22,7 +22,10 @@ fun NavGraph(startDestination: String = NavDirections.Splash.route) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    DefaultScaffold() { innerPadding ->
+    DefaultScaffold(
+        bottomBar = {
+        },
+    ) { innerPadding ->
         AnimatedNavHost(
             navController = navController,
             startDestination = startDestination,
@@ -32,7 +35,7 @@ fun NavGraph(startDestination: String = NavDirections.Splash.route) {
                 SplashScreen(
                     hiltViewModel(),
                     navigateToHome = {
-                        navController.navigate(NavDirections.Home.route)
+                        navController.navigate(NavDirections.Register.route)
                     },
                     navigateToLogin = {
                         navController.navigate(NavDirections.Login.route)
