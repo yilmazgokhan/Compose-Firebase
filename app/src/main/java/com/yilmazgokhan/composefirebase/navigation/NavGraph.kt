@@ -12,11 +12,12 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.yilmazgokhan.composefirebase.presentation.login.LoginScreen
 import com.yilmazgokhan.composefirebase.presentation.register.RegisterScreen
+import com.yilmazgokhan.composefirebase.presentation.splash.SplashScreen
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun NavGraph(startDestination: String = NavDirections.Home.route) {
+fun NavGraph(startDestination: String = NavDirections.Splash.route) {
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -27,6 +28,17 @@ fun NavGraph(startDestination: String = NavDirections.Home.route) {
             startDestination = startDestination,
             Modifier.padding(innerPadding)
         ) {
+            composable(NavDirections.Splash.route) {
+                SplashScreen(
+                    hiltViewModel(),
+                    navigateToHome = {
+                        navController.navigate(NavDirections.Home.route)
+                    },
+                    navigateToLogin = {
+                        navController.navigate(NavDirections.Login.route)
+                    }
+                )
+            }
             composable(NavDirections.Login.route) {
                 LoginScreen(
                     hiltViewModel(),

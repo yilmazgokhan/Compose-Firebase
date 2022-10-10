@@ -1,4 +1,38 @@
 package com.yilmazgokhan.composefirebase.presentation.splash
 
-class SplashScreen {
+import android.annotation.SuppressLint
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.yilmazgokhan.composefirebase.R
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun SplashScreen(
+    viewModel: SplashViewModel,
+    navigateToLogin: () -> Unit,
+    navigateToHome: () -> Unit,
+) {
+    val state by viewModel.uiState.collectAsState()
+
+    //Loader()
+
+    Text(text = "adasdasdasd")
+
+
+}
+
+@Composable
+fun Loader() {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.splash))
+    val progress by animateLottieCompositionAsState(composition)
+    LottieAnimation(
+        composition = composition,
+        progress = { progress },
+    )
 }
