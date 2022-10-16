@@ -8,20 +8,21 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.yilmazgokhan.composefirebase.R
 import com.yilmazgokhan.composefirebase.ui.component.ButtonWithBorder
 import com.yilmazgokhan.composefirebase.ui.component.DefaultToolbar
+import com.yilmazgokhan.composefirebase.ui.component.PasswordView
 import com.yilmazgokhan.composefirebase.ui.component.TextSecondary
 import com.yilmazgokhan.composefirebase.ui.theme.Purple200
 
@@ -139,78 +140,23 @@ fun RegisterScreen(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun PasswordSelection(viewModel: RegisterViewModel, state: RegisterViewState) {
-    var passVisible by rememberSaveable { mutableStateOf(false) }
-    var confirmPassVisible by rememberSaveable { mutableStateOf(false) }
-
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+    PasswordView(
         value = state.password,
-        singleLine = true,
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = "lockIcon"
-            )
-        },
-        onValueChange = {
-            viewModel.onTriggerEvent(RegisterViewEvent.SetPassword(it))
-        },
-        label = { Text(text = "Password") },
-        placeholder = { Text(text = "Password") },
-        visualTransformation = if (passVisible) VisualTransformation.None
-        else PasswordVisualTransformation(),
-        trailingIcon = {
-            val image = if (passVisible) {
-                R.drawable.ic_baseline_visibility_24
-            } else {
-                R.drawable.ic_baseline_visibility_off_24
-            }
-            val description = if (passVisible) "Hide password" else "Show password"
-
-            IconButton(onClick = { passVisible = !passVisible }) {
-                Icon(
-                    painter = painterResource(id = image),
-                    description
-                )
-            }
-        }
+        placeholder = "Password",
+        label = "Password",
+        onValueChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetPassword(it)) }
     )
+
     Spacer(modifier = Modifier.height(4.dp))
 
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+    PasswordView(
         value = state.passwordConfirm,
-        singleLine = true,
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Lock,
-                contentDescription = "lockIcon"
-            )
-        },
-        onValueChange = {
-            viewModel.onTriggerEvent(RegisterViewEvent.SetPasswordConfirm(it))
-        },
-        label = { Text(text = "Confirm password") },
-        placeholder = { Text(text = "Confirm password") },
-        visualTransformation = if (confirmPassVisible) VisualTransformation.None
-        else PasswordVisualTransformation(),
-        trailingIcon = {
-            val image = if (confirmPassVisible) {
-                R.drawable.ic_baseline_visibility_24
-            } else {
-                R.drawable.ic_baseline_visibility_off_24
-            }
-            val description = if (confirmPassVisible) "Hide password" else "Show password"
-
-            IconButton(onClick = { confirmPassVisible = !confirmPassVisible }) {
-                Icon(
-                    painter = painterResource(id = image),
-                    description
-                )
-            }
-        }
+        placeholder = "Confirm password",
+        label = "Confirm password",
+        onValueChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetPasswordConfirm(it)) }
     )
 }
 
