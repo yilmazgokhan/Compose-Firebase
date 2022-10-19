@@ -33,7 +33,7 @@ private fun googleLogin(
     lateinit var googleSignInClient: GoogleSignInClient
 
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(context.getString(R.string.default_web_client_id_X))
+        .requestIdToken("854786605418-peltml5envocm8j3r0ca3inpm45ngd1p.apps.googleusercontent.com")
         .requestEmail()
         .build()
 
