@@ -2,6 +2,7 @@ package com.yilmazgokhan.composefirebase.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.blankj.utilcode.util.LogUtils
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

@@ -24,8 +24,19 @@ class SplashViewModel @Inject constructor(
             when (event) {
                 SplashViewEvent.SplashEvent -> {
                     LogUtils.d("$this")
+                    setState {
+                        currentState.copy(
+                            isLoading = true
+                        )
+                    }
                 }
             }
+        }
+    }
+
+    fun temp() {
+        viewModelScope.launch {
+            SplashViewEvent.SplashEvent
         }
     }
 }

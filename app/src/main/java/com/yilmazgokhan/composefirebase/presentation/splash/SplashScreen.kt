@@ -23,10 +23,11 @@ fun SplashScreen(
     val state by viewModel.uiState.collectAsState()
 
     Loader()
+    viewModel.temp()
 
     LaunchedEffect(true) {
         delay(2000)
-        navigateToHome()
+        navigateToLogin()
     }
 }
 
