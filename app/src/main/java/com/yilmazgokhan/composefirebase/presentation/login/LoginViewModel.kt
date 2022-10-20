@@ -17,12 +17,21 @@ class LoginViewModel @Inject constructor(
     private val firebaseAuthUseCase: FirebaseAuthUseCase
 ) : BaseViewModel<LoginViewState, LoginViewEvent>() {
 
+    init {
+        LogUtils.d("$this")
+    }
+
     fun loginWithCredential(authCredential: AuthCredential) {
         viewModelScope.launch {
             firebaseAuthUseCase.invoke(authCredential).collect {
                 when (it.authenticationState) {
                     AuthenticationState.AUTHENTICATED -> {
-                        LoginViewEvent.SetLoginState(it.authenticationState)
+                        //LoginViewEvent.SetLoginState(it.authenticationState)
+                        setState {
+                            currentState.copy(
+                                loginState = it.authenticationState
+                            )
+                        }
                     }
 
                     AuthenticationState.UNAUTHENTICATED -> {
@@ -37,10 +46,6 @@ class LoginViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    init {
-        LogUtils.d("$this")
     }
 
     override fun createInitialState(): LoginViewState = LoginViewState()
