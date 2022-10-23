@@ -1,8 +1,8 @@
-package com.yilmazgokhan.composefirebase.data.firebase
+package com.yilmazgokhan.composefirebase.data.repository
 
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 
-interface FirebaseAuthLoginSource {
+interface LoginDataSource {
     suspend fun loginWithCredential(authCredential: AuthCredential): FirebaseUser?
 }

@@ -1,4 +1,4 @@
-package com.yilmazgokhan.composefirebase
+package com.yilmazgokhan.composefirebase.util.login
 
 import com.google.firebase.auth.FirebaseAuthException
 
