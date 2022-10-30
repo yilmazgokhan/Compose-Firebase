@@ -10,7 +10,9 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.blankj.utilcode.util.LogUtils
@@ -46,7 +48,7 @@ fun LoginScreen(
             }
         }
 
-    DefaultScaffold(loading = state.isLoading || state.loginState == AuthenticationState.IN_PROGRESS) {
+    DefaultScaffold(loading = state.isLoading) {
         Column(modifier = Modifier.padding(it)) {
             ButtonDefault(text = "Google Sign In",
                 click = {
@@ -65,7 +67,7 @@ fun LoginScreen(
 
 private fun googleLogin(
     context: Context,
-    launcher: ManagedActivityResultLauncher<Intent, ActivityResult>
+    launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
 ) {
     lateinit var googleSignInClient: GoogleSignInClient
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

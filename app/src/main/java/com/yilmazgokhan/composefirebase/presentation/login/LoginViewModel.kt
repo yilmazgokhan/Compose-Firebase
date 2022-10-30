@@ -7,6 +7,7 @@ import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
 import com.yilmazgokhan.composefirebase.domain.usecase.LoginUseCase
+import com.yilmazgokhan.composefirebase.util.State
 import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
 ) : BaseViewModel<LoginViewState, LoginViewEvent>() {
 
     init {
@@ -22,26 +23,23 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginWithCredential(authCredential: AuthCredential) {
+        setState { currentState.copy(isLoading = true) }
         viewModelScope.launch {
-            loginUseCase.invoke(authCredential).collect {
-                when (it.authenticationState) {
-                    AuthenticationState.AUTHENTICATED -> {
-                        //LoginViewEvent.SetLoginState(it.authenticationState)
-                        setState {
-                            currentState.copy(
-                                loginState = it.authenticationState
-                            )
-                        }
+            when (loginUseCase.execute(LoginUseCase.Input(authCredential = authCredential))) {
+                is State.Success -> {
+                    setState {
+                        currentState.copy(
+                            loginState = AuthenticationState.AUTHENTICATED,
+                            isLoading = false
+                        )
                     }
-
-                    AuthenticationState.UNAUTHENTICATED -> {
-                        LoginViewEvent.SetLoginState(it.authenticationState)
-
-                    }
-
-                    AuthenticationState.IN_PROGRESS -> {
-                        LoginViewEvent.SetLoginState(it.authenticationState)
-
+                }
+                is State.Error -> {
+                    setState {
+                        currentState.copy(
+                            loginState = AuthenticationState.UNAUTHENTICATED,
+                            isLoading = false
+                        )
                     }
                 }
             }
