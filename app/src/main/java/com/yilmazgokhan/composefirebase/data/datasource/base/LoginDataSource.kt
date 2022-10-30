@@ -4,5 +4,5 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseUser
 
 interface LoginDataSource {
-    suspend fun loginWithCredential(authCredential: AuthCredential): FirebaseUser?
+    suspend fun loginWithCredential(authCredential: AuthCredential): FirebaseUser
 }
