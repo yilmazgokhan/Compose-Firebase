@@ -3,11 +3,11 @@ package com.yilmazgokhan.composefirebase.presentation.login
 import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.auth.AuthCredential
-import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
 import com.yilmazgokhan.composefirebase.domain.usecase.LoginUseCase
+import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

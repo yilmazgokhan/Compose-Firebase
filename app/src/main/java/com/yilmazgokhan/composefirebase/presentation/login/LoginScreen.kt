@@ -3,15 +3,14 @@ package com.yilmazgokhan.composefirebase.presentation.login
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.blankj.utilcode.util.LogUtils
@@ -20,9 +19,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
-import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 import com.yilmazgokhan.composefirebase.ui.component.ButtonDefault
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
+import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -56,8 +55,10 @@ fun LoginScreen(
             )
         }
     }
+    Log.d("xyztyzxc", "temp: ${System.currentTimeMillis()}")
 
     if (state.loginState == AuthenticationState.AUTHENTICATED) {
+        Log.d("xyztyzxc", "LoginScreen: ${System.currentTimeMillis()}")
         navigateToHome()
     }
 }

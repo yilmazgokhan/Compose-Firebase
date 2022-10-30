@@ -19,10 +19,11 @@ class HomeViewModel @Inject constructor(
     init {
         LogUtils.d("$this")
     }
+
     fun temp1() {
         viewModelScope.launch {
             registerUseCase.invoke().collect {
-                when(it) {
+                when (it) {
                     is Resource.Loading -> {
                         LogUtils.d("$this")
 
@@ -44,7 +45,7 @@ class HomeViewModel @Inject constructor(
 
     override fun onTriggerEvent(event: HomeViewEvent) {
         viewModelScope.launch {
-            when(event) {
+            when (event) {
                 HomeViewEvent.HomeEvent -> {
 
                 }

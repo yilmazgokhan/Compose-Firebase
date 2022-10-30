@@ -1,5 +1,6 @@
 package com.yilmazgokhan.composefirebase.presentation.home
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,8 +14,10 @@ fun HomeScreen(
     val state by viewModel.uiState.collectAsState()
     viewModel.temp1()
 
+    /*
     BackHandler(onBack = {
         // TODO:
     })
+     */
     TextSecondary(text = "Temp")
 }
