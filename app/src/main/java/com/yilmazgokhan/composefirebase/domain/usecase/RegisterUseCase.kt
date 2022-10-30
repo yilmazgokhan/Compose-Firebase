@@ -1,6 +1,6 @@
 package com.yilmazgokhan.composefirebase.domain.usecase
 
-import com.yilmazgokhan.composefirebase.data.repository.RegisterRepositoryImpl
+import com.yilmazgokhan.composefirebase.data.repository.impl.RegisterRepositoryImpl
 import com.yilmazgokhan.composefirebase.domain.entity.User
 import com.yilmazgokhan.composefirebase.util.Resource
 import kotlinx.coroutines.flow.flow

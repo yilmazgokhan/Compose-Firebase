@@ -2,7 +2,7 @@ package com.yilmazgokhan.composefirebase.domain.usecase
 
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuthException
-import com.yilmazgokhan.composefirebase.data.repository.LoginRepositoryImpl
+import com.yilmazgokhan.composefirebase.data.repository.impl.LoginRepositoryImpl
 import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 import com.yilmazgokhan.composefirebase.util.login.FirebaseAuthenticationResult
 import kotlinx.coroutines.flow.flow

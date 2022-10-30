@@ -1,10 +1,10 @@
-package com.yilmazgokhan.composefirebase.data.remote.source
+package com.yilmazgokhan.composefirebase.data.datasource.impl
 
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
-import com.yilmazgokhan.composefirebase.data.repository.LoginDataSource
+import com.yilmazgokhan.composefirebase.data.datasource.base.LoginDataSource
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

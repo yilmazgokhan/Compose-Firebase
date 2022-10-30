@@ -1,4 +1,4 @@
-package com.yilmazgokhan.composefirebase.domain.repository
+package com.yilmazgokhan.composefirebase.data.repository.base
 
 import com.yilmazgokhan.composefirebase.domain.entity.User
 
