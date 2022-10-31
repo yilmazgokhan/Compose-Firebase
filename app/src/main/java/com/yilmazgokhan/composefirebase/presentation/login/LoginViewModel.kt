@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
     fun loginWithCredential(authCredential: AuthCredential) {
         setState { currentState.copy(isLoading = true) }
         viewModelScope.launch {
-            when (loginUseCase.execute(LoginUseCase.Input(authCredential = authCredential))) {
+            when (val result = loginUseCase.execute(LoginUseCase.Input(authCredential = authCredential))) {
                 is State.Success -> {
                     setState {
                         currentState.copy(
@@ -33,6 +33,9 @@ class LoginViewModel @Inject constructor(
                             isLoading = false
                         )
                     }
+                    result.data.uid
+                    result.data.email
+                    result.data.displayName
                 }
                 is State.Error -> {
                     setState {

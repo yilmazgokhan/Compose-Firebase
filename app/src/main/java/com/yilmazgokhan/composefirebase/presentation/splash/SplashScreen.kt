@@ -10,8 +10,10 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.yilmazgokhan.composefirebase.AuthService
 import com.yilmazgokhan.composefirebase.R
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
