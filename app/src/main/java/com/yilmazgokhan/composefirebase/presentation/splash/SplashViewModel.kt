@@ -1,19 +1,20 @@
 package com.yilmazgokhan.composefirebase.presentation.splash
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.LogUtils
 import com.yilmazgokhan.composefirebase.AuthService
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
+import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val authService: AuthService
+    private val authService: AuthService,
 ) : BaseViewModel<SplashViewState, SplashViewEvent>() {
 
     init {
@@ -24,9 +25,19 @@ class SplashViewModel @Inject constructor(
     override fun createInitialState(): SplashViewState = SplashViewState()
 
     private fun checkUser() {
-        val user = authService.isUserLogin()
-        if (user != null) {
-            Log.d("TAG", "checkUser: ")
+        viewModelScope.launch {
+            val authState = if (authService.isUserLogin())
+                AuthenticationState.AUTHENTICATED
+            else AuthenticationState.UNAUTHENTICATED
+
+            delay(4000)
+
+            setState {
+                currentState.copy(
+                    isLoading = false,
+                    authState = authState
+                )
+            }
         }
     }
 
@@ -58,4 +69,5 @@ sealed class SplashViewEvent : IViewEvent {
 
 data class SplashViewState(
     val isLoading: Boolean = false,
+    val authState: AuthenticationState? = null,
 ) : IViewState

@@ -1,19 +1,16 @@
 package com.yilmazgokhan.composefirebase.presentation.splash
 
 import android.annotation.SuppressLint
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.yilmazgokhan.composefirebase.AuthService
 import com.yilmazgokhan.composefirebase.R
-import kotlinx.coroutines.delay
-import javax.inject.Inject
+import com.yilmazgokhan.composefirebase.util.NavigateTo
+import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -24,17 +21,18 @@ fun SplashScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    Loader()
-    viewModel.temp()
-
-    LaunchedEffect(true) {
-        delay(2000)
-        navigateToLogin()
+    val authState = state.authState
+    if (authState == AuthenticationState.AUTHENTICATED) {
+        NavigateTo(navigateToHome)
+    } else if (authState == AuthenticationState.UNAUTHENTICATED) {
+        NavigateTo(navigateToLogin)
     }
+
+    Loader(state.isLoading)
 }
 
 @Composable
-fun Loader() {
+fun Loader(loading: Boolean) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.splash))
     val progress by animateLottieCompositionAsState(composition)
     LottieAnimation(
