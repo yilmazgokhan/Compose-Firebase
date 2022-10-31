@@ -1,9 +1,14 @@
 package com.yilmazgokhan.composefirebase.di
 
+import com.google.firebase.firestore.FirebaseFirestore
 import com.yilmazgokhan.composefirebase.data.datasource.base.LoginDataSource
+import com.yilmazgokhan.composefirebase.data.datasource.base.RegisterDataSource
 import com.yilmazgokhan.composefirebase.data.datasource.impl.LoginDataSourceImpl
+import com.yilmazgokhan.composefirebase.data.datasource.impl.RegisterDataSourceImpl
 import com.yilmazgokhan.composefirebase.data.repository.base.LoginRepository
+import com.yilmazgokhan.composefirebase.data.repository.base.RegisterRepository
 import com.yilmazgokhan.composefirebase.data.repository.impl.LoginRepositoryImpl
+import com.yilmazgokhan.composefirebase.data.repository.impl.RegisterRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +25,19 @@ class RepositoryModule {
 
     @Provides
     fun provideLoginRepository(
-        loginDataSource: LoginDataSource
+        loginDataSource: LoginDataSource,
     ): LoginRepository =
         LoginRepositoryImpl(loginDataSource)
+
+    @Provides
+    fun provideRegisterDataSource(
+        firebaseFirestore: FirebaseFirestore,
+    ): RegisterDataSource =
+        RegisterDataSourceImpl(firebaseFirestore)
+
+    @Provides
+    fun provideRegisterRepository(
+        registerDataSource: RegisterDataSource,
+    ): RegisterRepository =
+        RegisterRepositoryImpl(registerDataSource)
 }

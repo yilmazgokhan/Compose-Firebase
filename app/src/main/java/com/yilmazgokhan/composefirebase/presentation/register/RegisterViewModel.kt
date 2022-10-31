@@ -5,16 +5,30 @@ import com.blankj.utilcode.util.LogUtils
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
+import com.yilmazgokhan.composefirebase.domain.entity.User
+import com.yilmazgokhan.composefirebase.domain.usecase.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
+    private val registerUseCase: RegisterUseCase
 ) : BaseViewModel<RegisterViewState, RegisterViewEvent>() {
 
     init {
         LogUtils.d("$this")
+        temp()
+    }
+
+    private fun temp() {
+        viewModelScope.launch {
+            registerUseCase.execute(
+                RegisterUseCase.Input(
+                    User("asd")
+                )
+            )
+        }
     }
 
     override fun createInitialState(): RegisterViewState = RegisterViewState()

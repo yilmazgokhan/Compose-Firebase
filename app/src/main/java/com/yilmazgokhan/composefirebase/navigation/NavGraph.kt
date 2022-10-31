@@ -19,7 +19,7 @@ import com.yilmazgokhan.composefirebase.util.navigate
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun NavGraph(startDestination: String = NavDirections.Splash.route) {
+fun NavGraph(startDestination: String = NavDirections.Register.route) {
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route

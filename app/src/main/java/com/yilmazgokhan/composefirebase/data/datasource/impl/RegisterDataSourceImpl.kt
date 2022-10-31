@@ -15,9 +15,9 @@ class RegisterDataSourceImpl @Inject constructor(
     override suspend fun register(userId: String, user: User): State<User> {
         return try {
             val userRef = firebaseFirestore.collection(USERS).document(userId)
-                .set(user).await()
-
-
+                .set(user)
+                .addOnSuccessListener { }
+                .addOnFailureListener { }
             val user = User("")
             State.Success(userRef as User)
         } catch (exception: Exception) {

@@ -3,7 +3,6 @@ package com.yilmazgokhan.composefirebase.domain.usecase
 import com.yilmazgokhan.composefirebase.base.Inputs
 import com.yilmazgokhan.composefirebase.base.UseCase
 import com.yilmazgokhan.composefirebase.data.repository.base.RegisterRepository
-import com.yilmazgokhan.composefirebase.data.repository.impl.RegisterRepositoryImpl
 import com.yilmazgokhan.composefirebase.domain.entity.User
 import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
 import com.yilmazgokhan.composefirebase.util.State
@@ -18,6 +17,7 @@ class RegisterUseCase @Inject constructor(
     override suspend fun invoke(input: Input): State<User> {
         return try {
             authService.userId?.let {
+                registerRepository.register(it, input.user)
                 val user = User("asd")
                 State.Success(user)
             } ?: run {

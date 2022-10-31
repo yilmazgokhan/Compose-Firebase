@@ -10,5 +10,6 @@ class RegisterRepositoryImpl @Inject constructor(
 ) : RegisterRepository {
 
     override suspend fun register(userId: String, user: User) {
+        registerDataSource.register(userId, user)
     }
 }
