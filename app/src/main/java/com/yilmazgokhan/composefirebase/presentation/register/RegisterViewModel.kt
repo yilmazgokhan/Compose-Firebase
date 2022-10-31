@@ -7,13 +7,14 @@ import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
 import com.yilmazgokhan.composefirebase.domain.entity.User
 import com.yilmazgokhan.composefirebase.domain.usecase.RegisterUseCase
+import com.yilmazgokhan.composefirebase.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val registerUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase,
 ) : BaseViewModel<RegisterViewState, RegisterViewEvent>() {
 
     init {
@@ -23,11 +24,14 @@ class RegisterViewModel @Inject constructor(
 
     private fun temp() {
         viewModelScope.launch {
-            registerUseCase.execute(
-                RegisterUseCase.Input(
-                    User("asd")
-                )
-            )
+            when (val response = registerUseCase.execute(RegisterUseCase.Input(User("asd")))) {
+                is State.Success -> {
+                    response.data
+                }
+                is State.Error -> {
+                    response
+                }
+            }
         }
     }
 

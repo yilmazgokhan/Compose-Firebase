@@ -17,9 +17,10 @@ class RegisterUseCase @Inject constructor(
     override suspend fun invoke(input: Input): State<User> {
         return try {
             authService.userId?.let {
-                registerRepository.register(it, input.user)
-                val user = User("asd")
-                State.Success(user)
+                when (val response = registerRepository.register(it, input.user)) {
+                    is State.Success -> response
+                    is State.Error -> response
+                }
             } ?: run {
                 State.Error(TestException("User not found!"))
             }
