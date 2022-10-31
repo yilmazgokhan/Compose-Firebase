@@ -23,6 +23,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.yilmazgokhan.composefirebase.ui.component.ButtonDefault
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
+import com.yilmazgokhan.composefirebase.util.NavigateTo
 import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -60,8 +61,7 @@ fun LoginScreen(
     Log.d("xyztyzxc", "temp: ${System.currentTimeMillis()}")
 
     if (state.loginState == AuthenticationState.AUTHENTICATED) {
-        Log.d("xyztyzxc", "LoginScreen: ${System.currentTimeMillis()}")
-        navigateToHome()
+        NavigateTo(navigateToHome)
     }
 }
 

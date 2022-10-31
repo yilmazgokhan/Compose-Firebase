@@ -30,7 +30,7 @@ class SplashViewModel @Inject constructor(
                 AuthenticationState.AUTHENTICATED
             else AuthenticationState.UNAUTHENTICATED
 
-            delay(4000)
+            delay(2000)
 
             setState {
                 currentState.copy(
@@ -53,12 +53,6 @@ class SplashViewModel @Inject constructor(
                     }
                 }
             }
-        }
-    }
-
-    fun temp() {
-        viewModelScope.launch {
-            SplashViewEvent.SplashEvent
         }
     }
 }

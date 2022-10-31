@@ -15,6 +15,7 @@ import com.yilmazgokhan.composefirebase.presentation.login.LoginScreen
 import com.yilmazgokhan.composefirebase.presentation.register.RegisterScreen
 import com.yilmazgokhan.composefirebase.presentation.splash.SplashScreen
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
+import com.yilmazgokhan.composefirebase.util.navigate
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -36,10 +37,16 @@ fun NavGraph(startDestination: String = NavDirections.Splash.route) {
                 SplashScreen(
                     hiltViewModel(),
                     navigateToHome = {
-                        navController.navigate(NavDirections.Register.route)
+                        navController.navigate(
+                            route = NavDirections.Home.route,
+                            popUpTo = NavDirections.Splash.route
+                        )
                     },
                     navigateToLogin = {
-                        navController.navigate(NavDirections.Login.route)
+                        navController.navigate(
+                            route = NavDirections.Login.route,
+                            popUpTo = NavDirections.Splash.route
+                        )
                     }
                 )
             }
@@ -47,10 +54,16 @@ fun NavGraph(startDestination: String = NavDirections.Splash.route) {
                 LoginScreen(
                     hiltViewModel(),
                     navigateToRegister = {
-                        navController.navigate(NavDirections.Register.route)
+                        navController.navigate(
+                            route = NavDirections.Register.route,
+                            popUpTo = NavDirections.Register.route
+                        )
                     },
                     navigateToHome = {
-                        navController.navigate(NavDirections.Home.route)
+                        navController.navigate(
+                            route = NavDirections.Home.route,
+                            popUpTo = NavDirections.Register.route
+                        )
                     }
                 )
             }
