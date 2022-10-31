@@ -1,22 +1,34 @@
 package com.yilmazgokhan.composefirebase.domain.usecase
 
+import com.yilmazgokhan.composefirebase.base.Inputs
+import com.yilmazgokhan.composefirebase.base.UseCase
+import com.yilmazgokhan.composefirebase.data.repository.base.RegisterRepository
 import com.yilmazgokhan.composefirebase.data.repository.impl.RegisterRepositoryImpl
 import com.yilmazgokhan.composefirebase.domain.entity.User
-import com.yilmazgokhan.composefirebase.util.Resource
-import kotlinx.coroutines.flow.flow
+import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
+import com.yilmazgokhan.composefirebase.util.State
+import com.yilmazgokhan.composefirebase.util.TestException
 import javax.inject.Inject
 
 class RegisterUseCase @Inject constructor(
-    private val registerRepository: RegisterRepositoryImpl
-) {
-    suspend operator fun invoke() = flow {
-        emit(Resource.Loading())
-        try {
-            val user = User("asd")
-            registerRepository.register(user)
-            emit(Resource.Success(user))
-        } catch (e: Exception) {
-            emit(Resource.Error(e.message ?: ""))
+    private val authService: AuthService,
+    private val registerRepository: RegisterRepository,
+) : UseCase<RegisterUseCase.Input, User>() {
+
+    override suspend fun invoke(input: Input): State<User> {
+        return try {
+            authService.userId?.let {
+                val user = User("asd")
+                State.Success(user)
+            } ?: run {
+                State.Error(TestException("User not found!"))
+            }
+        } catch (exception: Exception) {
+            State.Error(exception)
         }
     }
+
+    data class Input(
+        val user: User,
+    ) : Inputs
 }
