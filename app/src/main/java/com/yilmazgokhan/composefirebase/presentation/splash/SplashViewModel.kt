@@ -33,7 +33,7 @@ class SplashViewModel @Inject constructor(
             delay(2000)
 
             setState {
-                currentState.copy(
+                state.copy(
                     isLoading = false,
                     authState = authState
                 )
@@ -47,7 +47,7 @@ class SplashViewModel @Inject constructor(
                 SplashViewEvent.SplashEvent -> {
                     LogUtils.d("$this")
                     setState {
-                        currentState.copy(
+                        state.copy(
                             isLoading = true
                         )
                     }

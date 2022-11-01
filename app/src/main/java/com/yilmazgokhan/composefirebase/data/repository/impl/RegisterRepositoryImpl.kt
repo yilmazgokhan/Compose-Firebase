@@ -28,8 +28,8 @@ class RegisterRepositoryImpl @Inject constructor(
                 phone = phone,
                 mail = mail,
                 address = address,
-                gender = gender)
-            ) {
+                gender = gender
+            )) {
                 is State.Success -> State.Success(response.data.mapModel())
                 is State.Error -> response
             }

@@ -13,16 +13,13 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.yilmazgokhan.composefirebase.ui.component.ButtonWithBorder
 import com.yilmazgokhan.composefirebase.ui.component.DefaultToolbar
-import com.yilmazgokhan.composefirebase.ui.component.PasswordView
 import com.yilmazgokhan.composefirebase.ui.component.TextSecondary
 import com.yilmazgokhan.composefirebase.ui.theme.Purple200
 
@@ -39,7 +36,7 @@ fun RegisterScreen(
             title = "Register",
             onBackPressClick = navigateToBack
         )
-    }, bottomBar = { BottomBar(navigateToBack) }) { padding ->
+    }, bottomBar = { BottomBar(viewModel) }) { padding ->
         Surface(
             modifier = Modifier
                 .fillMaxSize()
@@ -68,6 +65,25 @@ fun RegisterScreen(
                     },
                     label = { Text(text = "Name") },
                     placeholder = { Text(text = "Name") },
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = state.username,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "personIcon"
+                        )
+                    },
+                    onValueChange = {
+                        viewModel.onTriggerEvent(RegisterViewEvent.SetUsername(it))
+                    },
+                    label = { Text(text = "Username") },
+                    placeholder = { Text(text = "Username") },
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -128,36 +144,13 @@ fun RegisterScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
-                PasswordSelection(viewModel, state)
-                Spacer(modifier = Modifier.height(12.dp))
-
                 GenderSelection()
                 Spacer(modifier = Modifier.height(12.dp))
 
-                TermsAndConditionsSelection()
+                TermsAndConditionsSelection(state, viewModel)
             }
         }
     }
-}
-
-@OptIn(ExperimentalComposeUiApi::class)
-@Composable
-fun PasswordSelection(viewModel: RegisterViewModel, state: RegisterViewState) {
-    PasswordView(
-        value = state.password,
-        placeholder = "Password",
-        label = "Password",
-        onValueChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetPassword(it)) }
-    )
-
-    Spacer(modifier = Modifier.height(4.dp))
-
-    PasswordView(
-        value = state.passwordConfirm,
-        placeholder = "Confirm password",
-        label = "Confirm password",
-        onValueChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetPasswordConfirm(it)) }
-    )
 }
 
 @Composable
@@ -193,16 +186,13 @@ fun GenderSelection() {
 }
 
 @Composable
-fun TermsAndConditionsSelection() {
-    val termsState = remember { mutableStateOf(false) }
-    val newsletterState = remember { mutableStateOf(false) }
-
+fun TermsAndConditionsSelection(state: RegisterViewState, viewModel: RegisterViewModel) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
-            checked = termsState.value,
-            onCheckedChange = { termsState.value = it }
+            checked = state.termsCheck,
+            onCheckedChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetTermsCheck(it)) }
         )
         Spacer(modifier = Modifier.width(4.dp))
         TextSecondary(text = "I agree with terms and conditions")
@@ -213,8 +203,8 @@ fun TermsAndConditionsSelection() {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
-            checked = newsletterState.value,
-            onCheckedChange = { newsletterState.value = it }
+            checked = state.newsletterCheck,
+            onCheckedChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetNewsletterCheck(it)) }
         )
         Spacer(modifier = Modifier.width(4.dp))
         TextSecondary(text = "I want to receive the newsletter")
@@ -222,14 +212,14 @@ fun TermsAndConditionsSelection() {
 }
 
 @Composable
-fun BottomBar(navigateToBack: () -> Unit) {
+fun BottomBar(viewModel: RegisterViewModel) {
     Box(modifier = Modifier.padding(4.dp)) {
         ButtonWithBorder(
             text = "Register",
             textColor = Color.White,
             borderColor = Purple200,
             backgroundColor = Purple200,
-            click = { navigateToBack.invoke() }
+            click = { viewModel.temp() }
         )
     }
 }

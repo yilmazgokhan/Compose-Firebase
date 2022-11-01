@@ -11,7 +11,7 @@ abstract class BaseViewModel<State : IViewState, Event : IViewEvent> : ViewModel
     private val initialState: State by lazy { createInitialState() }
     abstract fun createInitialState(): State
 
-    val currentState: State get() = uiState.value
+    val state: State get() = uiState.value
 
     abstract fun onTriggerEvent(event: Event)
 
@@ -22,7 +22,7 @@ abstract class BaseViewModel<State : IViewState, Event : IViewEvent> : ViewModel
     val uiEvent = _uiEvent.asSharedFlow()
 
     protected fun setState(reduce: State.() -> State) {
-        val newState = currentState.reduce()
+        val newState = state.reduce()
         _uiState.value = newState
         LogUtils.d("$newState")
     }

@@ -18,24 +18,23 @@ class RegisterViewModel @Inject constructor(
 
     init {
         LogUtils.d("$this")
-        temp()
     }
 
-    private fun temp() {
+    fun temp() {
         viewModelScope.launch {
             when (val response = registerUseCase.execute(RegisterUseCase.Input(
-                username = "null",
-                name = "null",
-                phone = "null",
-                mail = "null",
-                address = "null",
+                username = state.username,
+                name = state.name,
+                phone = state.phone,
+                mail = state.email,
+                address = state.address,
                 gender = false,
             ))) {
                 is State.Success -> {
                     response.data
                 }
                 is State.Error -> {
-                    response
+                    response.exception
                 }
             }
         }
@@ -52,7 +51,7 @@ class RegisterViewModel @Inject constructor(
                 is RegisterViewEvent.SetAddress -> {
                     LogUtils.d("$this")
                     setState {
-                        currentState.copy(
+                        state.copy(
                             address = event.text
                         )
                     }
@@ -60,15 +59,23 @@ class RegisterViewModel @Inject constructor(
                 is RegisterViewEvent.SetEmail -> {
                     LogUtils.d("$this")
                     setState {
-                        currentState.copy(
+                        state.copy(
                             email = event.text
+                        )
+                    }
+                }
+                is RegisterViewEvent.SetUsername -> {
+                    LogUtils.d("$this")
+                    setState {
+                        state.copy(
+                            username = event.text
                         )
                     }
                 }
                 is RegisterViewEvent.SetName -> {
                     LogUtils.d("$this")
                     setState {
-                        currentState.copy(
+                        state.copy(
                             name = event.text
                         )
                     }
@@ -76,24 +83,24 @@ class RegisterViewModel @Inject constructor(
                 is RegisterViewEvent.SetPhone -> {
                     LogUtils.d("$this")
                     setState {
-                        currentState.copy(
+                        state.copy(
                             phone = event.text
                         )
                     }
                 }
-                is RegisterViewEvent.SetPassword -> {
+                is RegisterViewEvent.SetNewsletterCheck -> {
                     LogUtils.d("$this")
                     setState {
-                        currentState.copy(
-                            password = event.text
+                        state.copy(
+                            newsletterCheck = event.status
                         )
                     }
                 }
-                is RegisterViewEvent.SetPasswordConfirm -> {
+                is RegisterViewEvent.SetTermsCheck -> {
                     LogUtils.d("$this")
                     setState {
-                        currentState.copy(
-                            passwordConfirm = event.text
+                        state.copy(
+                            termsCheck = event.status
                         )
                     }
                 }
@@ -103,23 +110,24 @@ class RegisterViewModel @Inject constructor(
 }
 
 sealed class RegisterViewEvent : IViewEvent {
+    class SetUsername(val text: String) : RegisterViewEvent()
     class SetName(val text: String) : RegisterViewEvent()
     class SetPhone(val text: String) : RegisterViewEvent()
     class SetEmail(val text: String) : RegisterViewEvent()
     class SetAddress(val text: String) : RegisterViewEvent()
-    class SetPassword(val text: String) : RegisterViewEvent()
-    class SetPasswordConfirm(val text: String) : RegisterViewEvent()
+    class SetTermsCheck(val status: Boolean) : RegisterViewEvent()
+    class SetNewsletterCheck(val status: Boolean) : RegisterViewEvent()
     object RegisterEvent : RegisterViewEvent()
 }
 
 data class RegisterViewState(
-    val userId: Int? = null,
+    val username: String = "",
     val name: String = "",
     val phone: String = "",
     val email: String = "",
     val address: String = "",
-    val password: String = "",
-    val passwordConfirm: String = "",
+    val termsCheck: Boolean = false,
+    val newsletterCheck: Boolean = false,
     val isDisplay: Boolean = false,
     val isLoading: Boolean = false,
 ) : IViewState

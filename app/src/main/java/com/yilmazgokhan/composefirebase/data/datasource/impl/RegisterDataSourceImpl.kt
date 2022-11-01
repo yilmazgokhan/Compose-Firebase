@@ -31,8 +31,8 @@ class RegisterDataSourceImpl @Inject constructor(
                 address = address,
                 gender = gender,
             )
+            firebaseFirestore.collection(USERS).document(userId).set(user).await()
             val userRef = firebaseFirestore.collection(USERS).document(userId).get().await()
-            //val userRef = firebaseFirestore.collection(USERS).document(userId).set(user).await()
 
             val data = userRef.toObject(UserDTO::class.java)
             if (data != null)
