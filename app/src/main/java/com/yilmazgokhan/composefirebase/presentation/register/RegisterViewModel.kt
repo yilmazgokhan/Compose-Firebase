@@ -5,7 +5,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
-import com.yilmazgokhan.composefirebase.domain.entity.User
 import com.yilmazgokhan.composefirebase.domain.usecase.RegisterUseCase
 import com.yilmazgokhan.composefirebase.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +23,14 @@ class RegisterViewModel @Inject constructor(
 
     private fun temp() {
         viewModelScope.launch {
-            when (val response = registerUseCase.execute(RegisterUseCase.Input(User("asd")))) {
+            when (val response = registerUseCase.execute(RegisterUseCase.Input(
+                username = "null",
+                name = "null",
+                phone = "null",
+                mail = "null",
+                address = "null",
+                gender = false,
+            ))) {
                 is State.Success -> {
                     response.data
                 }

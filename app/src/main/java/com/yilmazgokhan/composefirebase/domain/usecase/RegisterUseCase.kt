@@ -3,7 +3,7 @@ package com.yilmazgokhan.composefirebase.domain.usecase
 import com.yilmazgokhan.composefirebase.base.Inputs
 import com.yilmazgokhan.composefirebase.base.UseCase
 import com.yilmazgokhan.composefirebase.data.repository.base.RegisterRepository
-import com.yilmazgokhan.composefirebase.domain.entity.User
+import com.yilmazgokhan.composefirebase.data.repository.model.User
 import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
 import com.yilmazgokhan.composefirebase.util.State
 import com.yilmazgokhan.composefirebase.util.TestException
@@ -17,7 +17,15 @@ class RegisterUseCase @Inject constructor(
     override suspend fun invoke(input: Input): State<User> {
         return try {
             authService.userId?.let {
-                when (val response = registerRepository.register(it, input.user)) {
+                when (val response = registerRepository.register(
+                    userId = it,
+                    username = input.username,
+                    name = input.name,
+                    phone = input.phone,
+                    mail = input.mail,
+                    address = input.address,
+                    gender = input.gender
+                )) {
                     is State.Success -> response
                     is State.Error -> response
                 }
@@ -30,6 +38,11 @@ class RegisterUseCase @Inject constructor(
     }
 
     data class Input(
-        val user: User,
+        val username: String? = null,
+        val name: String? = null,
+        val phone: String? = null,
+        val mail: String? = null,
+        val address: String? = null,
+        val gender: Boolean? = null,
     ) : Inputs
 }
