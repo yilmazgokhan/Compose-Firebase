@@ -24,7 +24,7 @@ fun DefaultScaffold(
     loading: Boolean = false,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    //Loading(visible = loading)
+    Loading(visible = loading)
 
     Scaffold(
         modifier = modifier,
