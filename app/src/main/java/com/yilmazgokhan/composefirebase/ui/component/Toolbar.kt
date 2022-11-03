@@ -1,6 +1,5 @@
 package com.yilmazgokhan.composefirebase.ui.component
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,7 +21,7 @@ fun DefaultToolbar(
     tint: Color = Color.White,
     backgroundColor: Color = Color.Blue,
     contentDescription: String = "",
-    onBackPressClick: () -> Unit = { }
+    onBackPressClick: () -> Unit = { },
 ) {
     Box(
         modifier = Modifier
@@ -49,6 +48,48 @@ fun DefaultToolbar(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_baseline_arrow_back_ios_24),
+                contentDescription = contentDescription,
+                tint = tint
+            )
+        }
+    }
+}
+
+@Composable
+fun ToolbarWithEndIcon(
+    title: String? = "",
+    textColor: Color = Color.White,
+    tint: Color = Color.White,
+    backgroundColor: Color = Color.Blue,
+    endIconRes: Int,
+    contentDescription: String = "",
+    endIconClick: () -> Unit = { },
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(backgroundColor),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp, horizontal = 8.dp),
+        ) {
+            title?.let {
+                TextDefault(
+                    modifier = Modifier.align(Alignment.Center),
+                    text = it,
+                    color = textColor
+                )
+            }
+        }
+
+        IconButton(
+            modifier = Modifier.align(Alignment.CenterEnd),
+            onClick = endIconClick
+        ) {
+            Icon(
+                painter = painterResource(endIconRes),
                 contentDescription = contentDescription,
                 tint = tint
             )

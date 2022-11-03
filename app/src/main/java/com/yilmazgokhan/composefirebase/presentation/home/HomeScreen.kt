@@ -4,9 +4,9 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.yilmazgokhan.composefirebase.R
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
-import com.yilmazgokhan.composefirebase.ui.component.DefaultToolbar
-import com.yilmazgokhan.composefirebase.ui.component.TextSecondary
+import com.yilmazgokhan.composefirebase.ui.component.ToolbarWithEndIcon
 
 @Composable
 fun HomeScreen(
@@ -25,8 +25,8 @@ fun HomeScreen(
 
 @Composable
 fun HomeTopBar() {
-    DefaultToolbar(
+    ToolbarWithEndIcon(
         title = "Home",
-
+        endIconRes = R.drawable.ic_baseline_person_24
     )
 }
