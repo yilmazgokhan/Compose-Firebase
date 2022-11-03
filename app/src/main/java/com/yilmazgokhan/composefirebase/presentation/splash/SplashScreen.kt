@@ -28,11 +28,11 @@ fun SplashScreen(
         NavigateTo(navigateToLogin)
     }
 
-    Loader(state.isLoading)
+    Loader()
 }
 
 @Composable
-fun Loader(loading: Boolean) {
+fun Loader() {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.splash))
     val progress by animateLottieCompositionAsState(composition)
     LottieAnimation(

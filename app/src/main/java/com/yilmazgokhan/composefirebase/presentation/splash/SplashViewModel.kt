@@ -2,10 +2,10 @@ package com.yilmazgokhan.composefirebase.presentation.splash
 
 import androidx.lifecycle.viewModelScope
 import com.blankj.utilcode.util.LogUtils
-import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
+import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
 import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -18,7 +18,6 @@ class SplashViewModel @Inject constructor(
 ) : BaseViewModel<SplashViewState, SplashViewEvent>() {
 
     init {
-        LogUtils.d("$this")
         checkUser()
     }
 

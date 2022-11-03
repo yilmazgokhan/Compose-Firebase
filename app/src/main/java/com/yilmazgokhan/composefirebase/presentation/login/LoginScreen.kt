@@ -3,7 +3,6 @@ package com.yilmazgokhan.composefirebase.presentation.login
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -23,6 +22,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.yilmazgokhan.composefirebase.ui.component.ButtonDefault
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
+import com.yilmazgokhan.composefirebase.util.Constants.Firebase.CLIENT_ID
 import com.yilmazgokhan.composefirebase.util.NavigateTo
 import com.yilmazgokhan.composefirebase.util.login.AuthenticationState
 
@@ -58,7 +58,6 @@ fun LoginScreen(
             )
         }
     }
-    Log.d("xyztyzxc", "temp: ${System.currentTimeMillis()}")
 
     if (state.loginState == AuthenticationState.AUTHENTICATED) {
         NavigateTo(navigateToHome)
@@ -71,7 +70,7 @@ private fun googleLogin(
 ) {
     lateinit var googleSignInClient: GoogleSignInClient
     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken("854786605418-68nkv5ep7n15euu0ngvumbm4map7l8pp.apps.googleusercontent.com")
+        .requestIdToken(CLIENT_ID)
         .requestEmail()
         .build()
 
