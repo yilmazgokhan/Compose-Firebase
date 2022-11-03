@@ -18,7 +18,8 @@ fun HomeScreen(
         // TODO:
     })
 
-    DefaultScaffold(topBar = { HomeTopBar() }) {
+    DefaultScaffold(topBar = { HomeTopBar() },
+        loading = state.isLoading) {
 
     }
 }

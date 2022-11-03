@@ -22,10 +22,8 @@ fun DefaultScaffold(
     backgroundColor: Color = MaterialTheme.colors.background,
     contentColor: Color = contentColorFor(backgroundColor),
     loading: Boolean = false,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
 ) {
-    Loading(visible = loading)
-
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
@@ -39,4 +37,6 @@ fun DefaultScaffold(
         isFloatingActionButtonDocked = true,
         backgroundColor = backgroundColor
     )
+
+    Loading(visible = loading)
 }
