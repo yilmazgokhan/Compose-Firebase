@@ -35,5 +35,5 @@ sealed class HomeViewEvent : IViewEvent {
 }
 
 data class HomeViewState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
 ) : IViewState

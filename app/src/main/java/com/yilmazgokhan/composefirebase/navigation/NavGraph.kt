@@ -12,6 +12,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.yilmazgokhan.composefirebase.presentation.home.HomeScreen
 import com.yilmazgokhan.composefirebase.presentation.login.LoginScreen
+import com.yilmazgokhan.composefirebase.presentation.profile.ProfileScreen
 import com.yilmazgokhan.composefirebase.presentation.register.RegisterScreen
 import com.yilmazgokhan.composefirebase.presentation.splash.SplashScreen
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
@@ -77,7 +78,20 @@ fun NavGraph(startDestination: String = NavDirections.Splash.route) {
             }
             composable(NavDirections.Home.route) {
                 HomeScreen(
-                    hiltViewModel()
+                    hiltViewModel(),
+                    navigateToProfile = {
+                        navController.navigate(
+                            route = NavDirections.Profile.route
+                        )
+                    }
+                )
+            }
+            composable(NavDirections.Profile.route) {
+                ProfileScreen(
+                    hiltViewModel(),
+                    navigateToBack = {
+                        navController.popBackStack()
+                    }
                 )
             }
         }
