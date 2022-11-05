@@ -1,9 +1,7 @@
 package com.yilmazgokhan.composefirebase.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -86,6 +84,57 @@ fun ToolbarWithEndIcon(
 
         IconButton(
             modifier = Modifier.align(Alignment.CenterEnd),
+            onClick = endIconClick
+        ) {
+            Icon(
+                painter = painterResource(endIconRes),
+                contentDescription = contentDescription,
+                tint = tint
+            )
+        }
+    }
+}
+
+@Composable
+fun ToolbarWithEndIcon(
+    title: String? = "",
+    textColor: Color = Color.White,
+    tint: Color = Color.White,
+    backgroundColor: Color = Color.Blue,
+    endIconRes: Int,
+    contentDescription: String = "",
+    endIconClick: () -> Unit = { },
+    onBackPressClick: () -> Unit = { },
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(backgroundColor),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp, horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            IconButton(
+                onClick = onBackPressClick
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_baseline_arrow_back_ios_24),
+                    contentDescription = contentDescription,
+                    tint = tint
+                )
+            }
+
+            title?.let {
+                TextDefault(
+                    text = it,
+                    color = textColor
+                )
+            }
+        }
+
+        IconButton(
             onClick = endIconClick
         ) {
             Icon(

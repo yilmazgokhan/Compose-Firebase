@@ -1,5 +1,6 @@
 package com.yilmazgokhan.composefirebase.presentation.profile
 
+import android.R
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -9,7 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.yilmazgokhan.composefirebase.ui.component.ButtonDefault
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
-import com.yilmazgokhan.composefirebase.ui.component.DefaultToolbar
+import com.yilmazgokhan.composefirebase.ui.component.ToolbarWithEndIcon
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -21,9 +23,12 @@ fun ProfileScreen(
 
     DefaultScaffold(
         topBar = {
-            DefaultToolbar(
+            ToolbarWithEndIcon(
                 title = "Profile",
-                onBackPressClick = navigateToBack)
+                onBackPressClick = navigateToBack,
+                endIconRes = R.drawable.ic_delete,
+                endIconClick = {}
+            )
         },
         bottomBar = { ButtonDefault(text = "Save", click = {}) },
         loading = state.isLoading
