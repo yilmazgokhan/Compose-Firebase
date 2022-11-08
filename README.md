@@ -12,11 +12,14 @@
 
 ## Project Structure
 
+- base: 
 - data: It contains all the data accessing and manipulating components.
+- di: 
+- domain: 
 - navigation: Navigation component classes
 - presentation: View classes.
 - ui: Component classes.
-- utils: Utility classes.
+- util: Utility classes.
 
 ## Libraries
 

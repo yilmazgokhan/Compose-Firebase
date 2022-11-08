@@ -115,7 +115,7 @@ fun ToolbarWithEndIcon(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp, horizontal = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween) {
+            horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             IconButton(
                 onClick = onBackPressClick
             ) {
