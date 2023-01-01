@@ -68,18 +68,12 @@ fun ToolbarWithEndIcon(
             .fillMaxWidth()
             .background(backgroundColor),
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 8.dp),
-        ) {
-            title?.let {
-                TextDefault(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = it,
-                    color = textColor
-                )
-            }
+        title?.let {
+            TextDefault(
+                modifier = Modifier.align(Alignment.Center),
+                text = it,
+                color = textColor
+            )
         }
 
         IconButton(
@@ -113,9 +107,11 @@ fun ToolbarWithEndIcon(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                .fillMaxWidth(),
+                //.padding(vertical = 16.dp, horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             IconButton(
                 onClick = onBackPressClick
             ) {
@@ -132,16 +128,16 @@ fun ToolbarWithEndIcon(
                     color = textColor
                 )
             }
-        }
 
-        IconButton(
-            onClick = endIconClick
-        ) {
-            Icon(
-                painter = painterResource(endIconRes),
-                contentDescription = contentDescription,
-                tint = tint
-            )
+            IconButton(
+                onClick = endIconClick
+            ) {
+                Icon(
+                    painter = painterResource(endIconRes),
+                    contentDescription = contentDescription,
+                    tint = tint
+                )
+            }
         }
     }
 }
