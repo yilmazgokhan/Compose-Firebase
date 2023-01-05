@@ -7,7 +7,7 @@ import com.yilmazgokhan.composefirebase.util.State
 class CheckUserUseCase constructor(
     private val checkUserRepository: CheckUserRepository,
 ) : UseCase<Nothing, Nothing>() {
-    override suspend fun invoke(input: Nothing): State<Nothing> {
+    override suspend fun invoke(input: Nothing?): State<Nothing> {
         TODO("Not yet implemented")
     }
 }

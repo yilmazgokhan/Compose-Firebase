@@ -9,11 +9,11 @@ import com.yilmazgokhan.composefirebase.util.State
 
 class LoginUseCase constructor(
     private val loginRepository: LoginRepository,
-) : UseCase<LoginUseCase.Input, FirebaseUser>() {
+) : UseCase<LoginUseCase.Input?, FirebaseUser>() {
 
-    override suspend fun invoke(input: Input): State<FirebaseUser> {
+    override suspend fun invoke(input: Input?): State<FirebaseUser> {
         return try {
-            when (val response = loginRepository.loginWithCredential(input.authCredential)) {
+            when (val response = loginRepository.loginWithCredential(input!!.authCredential)) {
                 is State.Success -> response
                 is State.Error -> response
             }

@@ -22,14 +22,16 @@ class RegisterViewModel @Inject constructor(
 
     fun temp() {
         viewModelScope.launch {
-            when (val response = registerUseCase.execute(RegisterUseCase.Input(
-                username = state.username,
-                name = state.name,
-                phone = state.phone,
-                mail = state.email,
-                address = state.address,
-                gender = false,
-            ))) {
+            when (val response = registerUseCase.execute(
+                RegisterUseCase.Input(
+                    username = state.username,
+                    name = state.name,
+                    phone = state.phone,
+                    mail = state.email,
+                    address = state.address,
+                    gender = false,
+                )
+            )) {
                 is State.Success -> {
                     response.data
                 }

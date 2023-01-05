@@ -14,17 +14,17 @@ class RegisterUseCase @Inject constructor(
     private val registerRepository: RegisterRepository,
 ) : UseCase<RegisterUseCase.Input, User>() {
 
-    override suspend fun invoke(input: Input): State<User> {
+    override suspend fun invoke(input: Input?): State<User> {
         return try {
             authService.userId?.let {
                 when (val response = registerRepository.register(
                     userId = it,
-                    username = input.username,
-                    name = input.name,
-                    phone = input.phone,
-                    mail = input.mail,
-                    address = input.address,
-                    gender = input.gender
+                    username = input?.username,
+                    name = input?.name,
+                    phone = input?.phone,
+                    mail = input?.mail,
+                    address = input?.address,
+                    gender = input?.gender
                 )) {
                     is State.Success -> response
                     is State.Error -> response
