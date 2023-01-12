@@ -2,10 +2,6 @@ package com.yilmazgokhan.composefirebase.presentation.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
@@ -13,10 +9,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.yilmazgokhan.composefirebase.R
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
+import com.yilmazgokhan.composefirebase.ui.component.DefaultTextField
 import com.yilmazgokhan.composefirebase.ui.component.ToolbarWithEndIcon
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -50,30 +46,25 @@ fun ProfileScreen(
             )
         },
         loading = state.isLoading
-    ) {
+    ) { padding ->
         Column(modifier = Modifier
             .padding(4.dp)
-            .padding(it)
+            .padding(padding)
             .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally) {
-
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            DefaultTextField(
+                modifier = Modifier.padding(vertical = 4.dp),
                 value = state.name,
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = "personIcon"
-                    )
+                iconVector = Icons.Default.Person,
+                iconText = "personIcon",
+                onValueChange = {
+                    viewModel.onTriggerEvent(ProfileViewEvent.SetName(it))
                 },
-                onValueChange = {},
-                label = { Text(text = "Name") },
-                placeholder = { Text(text = "Name") },
+                label = "Name",
+                placeholder = "Name",
                 enabled = state.editMode
             )
-            Spacer(modifier = Modifier.height(4.dp))
         }
     }
 

@@ -39,6 +39,13 @@ class ProfileViewModel @Inject constructor(
                 is ProfileViewEvent.SetUser -> {
                     // TODO:
                 }
+                is ProfileViewEvent.SetName -> {
+                    setState {
+                        state.copy(
+                            name = event.name
+                        )
+                    }
+                }
                 ProfileViewEvent.ApplyClick -> {
                     setState {
                         state.copy(
@@ -88,6 +95,7 @@ sealed class ProfileViewEvent : IViewEvent {
     object ProfileEvent : ProfileViewEvent()
     class SetLoading(val status: Boolean) : ProfileViewEvent()
     class SetUser(val user: User) : ProfileViewEvent()
+    class SetName(val name: String) : ProfileViewEvent()
     object EditClick : ProfileViewEvent()
     object ApplyClick : ProfileViewEvent()
 }
