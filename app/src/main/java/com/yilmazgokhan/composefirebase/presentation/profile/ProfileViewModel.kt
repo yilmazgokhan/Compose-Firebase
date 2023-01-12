@@ -28,9 +28,30 @@ class ProfileViewModel @Inject constructor(
             when (event) {
                 ProfileViewEvent.ProfileEvent -> {
                     getUser()
-
+                }
+                is ProfileViewEvent.SetLoading -> {
+                    setState {
+                        state.copy(
+                            isLoading = event.status
+                        )
+                    }
                 }
                 is ProfileViewEvent.SetUser -> {
+                    // TODO:
+                }
+                ProfileViewEvent.ApplyClick -> {
+                    setState {
+                        state.copy(
+                            editMode = false
+                        )
+                    }
+                }
+                ProfileViewEvent.EditClick -> {
+                    setState {
+                        state.copy(
+                            editMode = true
+                        )
+                    }
                 }
             }
         }
@@ -40,7 +61,6 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = getUserUseCase.execute(input = null)) {
                 is State.Success -> {
-                    LogUtils.d("${result.data}")
                     val user = result.data
                     setState {
                         state.copy(
@@ -66,7 +86,10 @@ class ProfileViewModel @Inject constructor(
 
 sealed class ProfileViewEvent : IViewEvent {
     object ProfileEvent : ProfileViewEvent()
+    class SetLoading(val status: Boolean) : ProfileViewEvent()
     class SetUser(val user: User) : ProfileViewEvent()
+    object EditClick : ProfileViewEvent()
+    object ApplyClick : ProfileViewEvent()
 }
 
 data class ProfileViewState(
@@ -78,6 +101,7 @@ data class ProfileViewState(
     val termsCheck: Boolean = false,
     val newsletterCheck: Boolean = false,
     val gender: Boolean = false,
+    val editMode: Boolean = false,
     val isDisplay: Boolean = false,
     val isLoading: Boolean = false,
 ) : IViewState
