@@ -5,6 +5,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
+import com.yilmazgokhan.composefirebase.data.repository.model.User
 import com.yilmazgokhan.composefirebase.domain.usecase.GetUserUseCase
 import com.yilmazgokhan.composefirebase.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ class ProfileViewModel @Inject constructor(
     init {
         getUser()
     }
+
     override fun onTriggerEvent(event: ProfileViewEvent) {
         viewModelScope.launch {
             when (event) {
@@ -28,16 +30,29 @@ class ProfileViewModel @Inject constructor(
                     getUser()
 
                 }
+                is ProfileViewEvent.SetUser -> {
+                }
             }
         }
     }
 
     private fun getUser() {
         viewModelScope.launch {
-            when(val result = getUserUseCase.execute(input = null)) {
+            when (val result = getUserUseCase.execute(input = null)) {
                 is State.Success -> {
-                    result.data
                     LogUtils.d("${result.data}")
+                    val user = result.data
+                    setState {
+                        state.copy(
+                            isLoading = false,
+                            username = user.username ?: "",
+                            name = user.name ?: "",
+                            phone = user.phone ?: "",
+                            email = "",
+                            address = user.address ?: "",
+                            gender = user.gender ?: false
+                        )
+                    }
                 }
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
@@ -51,6 +66,7 @@ class ProfileViewModel @Inject constructor(
 
 sealed class ProfileViewEvent : IViewEvent {
     object ProfileEvent : ProfileViewEvent()
+    class SetUser(val user: User) : ProfileViewEvent()
 }
 
 data class ProfileViewState(
@@ -61,6 +77,7 @@ data class ProfileViewState(
     val address: String = "",
     val termsCheck: Boolean = false,
     val newsletterCheck: Boolean = false,
+    val gender: Boolean = false,
     val isDisplay: Boolean = false,
     val isLoading: Boolean = false,
 ) : IViewState

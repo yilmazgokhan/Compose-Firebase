@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import com.yilmazgokhan.composefirebase.R
 import com.yilmazgokhan.composefirebase.ui.component.ButtonDefault
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
+import com.yilmazgokhan.composefirebase.ui.component.TextDefault
 import com.yilmazgokhan.composefirebase.ui.component.ToolbarWithEndIcon
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -38,6 +39,10 @@ fun ProfileScreen(
             .padding(it)
             .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally) {
+
+            TextDefault(text = state.name)
+            TextDefault(text = state.username)
+            TextDefault(text = state.phone)
         }
     }
 
