@@ -37,7 +37,17 @@ class ProfileViewModel @Inject constructor(
                     }
                 }
                 is ProfileViewEvent.SetUser -> {
-                    // TODO:
+                    setState {
+                        state.copy(
+                            isLoading = false,
+                            username = event.user.username ?: "",
+                            name = event.user.name ?: "",
+                            phone = event.user.phone ?: "",
+                            email = "",
+                            address = event.user.address ?: "",
+                            gender = event.user.gender ?: false
+                        )
+                    }
                 }
                 is ProfileViewEvent.SetName -> {
                     setState {
@@ -80,6 +90,7 @@ class ProfileViewModel @Inject constructor(
                             gender = user.gender ?: false
                         )
                     }
+                    // TODO: call event 
                 }
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
@@ -113,3 +124,7 @@ data class ProfileViewState(
     val isDisplay: Boolean = false,
     val isLoading: Boolean = false,
 ) : IViewState
+
+/* todo
+https://developer.android.com/codelabs/basic-android-kotlin-compose-viewmodel-and-state#6
+ */
