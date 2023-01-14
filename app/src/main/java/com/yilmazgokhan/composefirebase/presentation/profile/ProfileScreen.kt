@@ -3,7 +3,7 @@ package com.yilmazgokhan.composefirebase.presentation.profile
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -63,6 +63,50 @@ fun ProfileScreen(
                 },
                 label = "Name",
                 placeholder = "Name",
+                enabled = state.editMode
+            )
+
+            DefaultTextField(
+                modifier = Modifier.padding(vertical = 4.dp),
+                value = state.username,
+                iconVector = Icons.Default.Person,
+                iconText = "personIcon",
+                onValueChange = {},
+                label = "Username",
+                placeholder = "Username",
+                enabled = state.editMode
+            )
+
+            DefaultTextField(
+                modifier = Modifier.padding(vertical = 4.dp),
+                value = state.phone,
+                iconVector = Icons.Default.Phone,
+                iconText = "personIcon",
+                onValueChange = {},
+                label = "Phone",
+                placeholder = "Phone",
+                enabled = state.editMode
+            )
+
+            DefaultTextField(
+                modifier = Modifier.padding(vertical = 4.dp),
+                value = state.email,
+                iconVector = Icons.Default.Email,
+                iconText = "personIcon",
+                onValueChange = {},
+                label = "Email",
+                placeholder = "Email",
+                enabled = state.editMode
+            )
+
+            DefaultTextField(
+                modifier = Modifier.padding(vertical = 4.dp),
+                value = state.address,
+                iconVector = Icons.Default.MyLocation,
+                iconText = "personIcon",
+                onValueChange = {},
+                label = "Address",
+                placeholder = "Address",
                 enabled = state.editMode
             )
         }
