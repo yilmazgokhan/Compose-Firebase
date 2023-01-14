@@ -2,6 +2,7 @@ package com.yilmazgokhan.composefirebase.presentation.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.yilmazgokhan.composefirebase.R
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
@@ -81,10 +83,11 @@ fun ProfileScreen(
                 modifier = Modifier.padding(vertical = 4.dp),
                 value = state.phone,
                 iconVector = Icons.Default.Phone,
-                iconText = "personIcon",
+                iconText = "phoneIcon",
                 onValueChange = {},
                 label = "Phone",
                 placeholder = "Phone",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 enabled = state.editMode
             )
 
@@ -92,18 +95,19 @@ fun ProfileScreen(
                 modifier = Modifier.padding(vertical = 4.dp),
                 value = state.email,
                 iconVector = Icons.Default.Email,
-                iconText = "personIcon",
+                iconText = "emailIcon",
                 onValueChange = {},
                 label = "Email",
                 placeholder = "Email",
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 enabled = state.editMode
             )
 
             DefaultTextField(
                 modifier = Modifier.padding(vertical = 4.dp),
                 value = state.address,
-                iconVector = Icons.Default.MyLocation,
-                iconText = "personIcon",
+                iconVector = Icons.Default.Home,
+                iconText = "homeIcon",
                 onValueChange = {},
                 label = "Address",
                 placeholder = "Address",

@@ -18,7 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.yilmazgokhan.composefirebase.presentation.profile.ProfileViewEvent
 import com.yilmazgokhan.composefirebase.ui.component.ButtonWithBorder
+import com.yilmazgokhan.composefirebase.ui.component.DefaultTextField
 import com.yilmazgokhan.composefirebase.ui.component.DefaultToolbar
 import com.yilmazgokhan.composefirebase.ui.component.TextSecondary
 import com.yilmazgokhan.composefirebase.ui.theme.Purple200
@@ -53,7 +55,6 @@ fun RegisterScreen(
                     modifier = Modifier.fillMaxWidth(),
                     value = state.name,
                     singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Person,
@@ -68,81 +69,55 @@ fun RegisterScreen(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
 
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                DefaultTextField(
+                    modifier = Modifier.padding(vertical = 4.dp),
                     value = state.username,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "personIcon"
-                        )
-                    },
+                    iconVector = Icons.Default.Person,
+                    iconText = "personIcon",
                     onValueChange = {
                         viewModel.onTriggerEvent(RegisterViewEvent.SetUsername(it))
                     },
-                    label = { Text(text = "Username") },
-                    placeholder = { Text(text = "Username") },
+                    label = "Username",
+                    placeholder = "Username",
                 )
-                Spacer(modifier = Modifier.height(4.dp))
 
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                DefaultTextField(
+                    modifier = Modifier.padding(vertical = 4.dp),
                     value = state.phone,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Phone,
-                            contentDescription = "phoneIcon"
-                        )
-                    },
+                    iconVector = Icons.Default.Phone,
+                    iconText = "phoneIcon",
                     onValueChange = {
                         viewModel.onTriggerEvent(RegisterViewEvent.SetPhone(it))
                     },
-                    label = { Text(text = "Phone number") },
-                    placeholder = { Text(text = "Phone number") },
+                    label = "Phone",
+                    placeholder = "Phone",
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 )
-                Spacer(modifier = Modifier.height(4.dp))
 
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                DefaultTextField(
+                    modifier = Modifier.padding(vertical = 4.dp),
                     value = state.email,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Email,
-                            contentDescription = "emailIcon"
-                        )
-                    },
+                    iconVector = Icons.Default.Email,
+                    iconText = "emailIcon",
                     onValueChange = {
                         viewModel.onTriggerEvent(RegisterViewEvent.SetEmail(it))
                     },
-                    label = { Text(text = "Email address") },
-                    placeholder = { Text(text = "Email address") },
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = state.address,
-                    singleLine = false,
+                    label = "Email",
+                    placeholder = "Email",
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Home,
-                            contentDescription = "addressIcon"
-                        )
-                    },
+                )
+
+                DefaultTextField(
+                    modifier = Modifier.padding(vertical = 4.dp),
+                    value = state.address,
+                    iconVector = Icons.Default.Home,
+                    iconText = "addressIcon",
                     onValueChange = {
                         viewModel.onTriggerEvent(RegisterViewEvent.SetAddress(it))
                     },
-                    label = { Text(text = "Address") },
-                    placeholder = { Text(text = "Address") },
+                    label = "Address",
+                    placeholder = "Address",
                 )
-                Spacer(modifier = Modifier.height(4.dp))
 
                 GenderSelection()
                 Spacer(modifier = Modifier.height(12.dp))
