@@ -5,7 +5,7 @@ import com.yilmazgokhan.composefirebase.data.datasource.base.RegisterDataSource
 import com.yilmazgokhan.composefirebase.data.datasource.entity.UserDTO
 import com.yilmazgokhan.composefirebase.util.Constants.Firestore.USERS
 import com.yilmazgokhan.composefirebase.util.State
-import com.yilmazgokhan.composefirebase.util.TestException
+import com.yilmazgokhan.composefirebase.util.UserNotFoundException
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class RegisterDataSourceImpl @Inject constructor(
             if (data != null)
                 State.Success(data)
             else
-                State.Error(TestException("error"))
+                State.Error(UserNotFoundException("User not found!"))
 
         } catch (exception: Exception) {
             State.Error(exception)

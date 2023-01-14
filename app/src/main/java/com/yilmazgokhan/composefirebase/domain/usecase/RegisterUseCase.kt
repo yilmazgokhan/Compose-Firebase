@@ -6,7 +6,7 @@ import com.yilmazgokhan.composefirebase.data.repository.base.RegisterRepository
 import com.yilmazgokhan.composefirebase.data.repository.model.User
 import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
 import com.yilmazgokhan.composefirebase.util.State
-import com.yilmazgokhan.composefirebase.util.TestException
+import com.yilmazgokhan.composefirebase.util.UserNotFoundException
 import javax.inject.Inject
 
 class RegisterUseCase @Inject constructor(
@@ -30,7 +30,7 @@ class RegisterUseCase @Inject constructor(
                     is State.Error -> response
                 }
             } ?: run {
-                State.Error(TestException("User not found!"))
+                State.Error(UserNotFoundException("User not found!"))
             }
         } catch (exception: Exception) {
             State.Error(exception)

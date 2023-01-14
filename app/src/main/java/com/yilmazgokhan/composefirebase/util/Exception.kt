@@ -1,3 +1,5 @@
 package com.yilmazgokhan.composefirebase.util
 
-class TestException(message: String) : Exception(message)
+class CommonException(message: String = "Something went wrong") : Exception(message)
+
+class UserNotFoundException(message: String) : Exception(message)

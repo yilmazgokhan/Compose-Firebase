@@ -4,8 +4,8 @@ import com.yilmazgokhan.composefirebase.base.UseCase
 import com.yilmazgokhan.composefirebase.data.repository.base.GetUserRepository
 import com.yilmazgokhan.composefirebase.data.repository.model.User
 import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
+import com.yilmazgokhan.composefirebase.util.CommonException
 import com.yilmazgokhan.composefirebase.util.State
-import com.yilmazgokhan.composefirebase.util.TestException
 import javax.inject.Inject
 
 class GetUserUseCase @Inject constructor(
@@ -21,7 +21,7 @@ class GetUserUseCase @Inject constructor(
                     is State.Error -> response
                 }
             } ?: run {
-                State.Error(TestException("User not found!"))
+                State.Error(CommonException())
             }
         } catch (exception: Exception) {
             State.Error(exception)
