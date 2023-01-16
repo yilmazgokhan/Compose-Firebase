@@ -56,6 +56,34 @@ class ProfileViewModel @Inject constructor(
                         )
                     }
                 }
+                is ProfileViewEvent.SetAddress -> {
+                    setState {
+                        state.copy(
+                            address = event.address
+                        )
+                    }
+                }
+                is ProfileViewEvent.SetEmail -> {
+                    setState {
+                        state.copy(
+                            email = event.email
+                        )
+                    }
+                }
+                is ProfileViewEvent.SetPhone -> {
+                    setState {
+                        state.copy(
+                            phone = event.phone
+                        )
+                    }
+                }
+                is ProfileViewEvent.SetUsername -> {
+                    setState {
+                        state.copy(
+                            username = event.username
+                        )
+                    }
+                }
                 ProfileViewEvent.ApplyClick -> {
                     setState {
                         state.copy(
@@ -90,7 +118,7 @@ class ProfileViewModel @Inject constructor(
                             gender = user.gender ?: false
                         )
                     }
-                    // TODO: call event 
+                    // TODO: call event
                 }
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
@@ -107,6 +135,10 @@ sealed class ProfileViewEvent : IViewEvent {
     class SetLoading(val status: Boolean) : ProfileViewEvent()
     class SetUser(val user: User) : ProfileViewEvent()
     class SetName(val name: String) : ProfileViewEvent()
+    class SetUsername(val username: String) : ProfileViewEvent()
+    class SetPhone(val phone: String) : ProfileViewEvent()
+    class SetEmail(val email: String) : ProfileViewEvent()
+    class SetAddress(val address: String) : ProfileViewEvent()
     object EditClick : ProfileViewEvent()
     object ApplyClick : ProfileViewEvent()
 }

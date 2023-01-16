@@ -73,7 +73,9 @@ fun ProfileScreen(
                 value = state.username,
                 iconVector = Icons.Default.Person,
                 iconText = "personIcon",
-                onValueChange = {},
+                onValueChange = {
+                    viewModel.onTriggerEvent(ProfileViewEvent.SetUsername(it))
+                },
                 label = "Username",
                 placeholder = "Username",
                 enabled = state.editMode
@@ -84,7 +86,9 @@ fun ProfileScreen(
                 value = state.phone,
                 iconVector = Icons.Default.Phone,
                 iconText = "phoneIcon",
-                onValueChange = {},
+                onValueChange = {
+                    viewModel.onTriggerEvent(ProfileViewEvent.SetPhone(it))
+                },
                 label = "Phone",
                 placeholder = "Phone",
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
@@ -96,7 +100,9 @@ fun ProfileScreen(
                 value = state.email,
                 iconVector = Icons.Default.Email,
                 iconText = "emailIcon",
-                onValueChange = {},
+                onValueChange = {
+                    viewModel.onTriggerEvent(ProfileViewEvent.SetEmail(it))
+                },
                 label = "Email",
                 placeholder = "Email",
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
@@ -108,7 +114,9 @@ fun ProfileScreen(
                 value = state.address,
                 iconVector = Icons.Default.Home,
                 iconText = "homeIcon",
-                onValueChange = {},
+                onValueChange = {
+                    viewModel.onTriggerEvent(ProfileViewEvent.SetAddress(it))
+                },
                 label = "Address",
                 placeholder = "Address",
                 enabled = state.editMode
