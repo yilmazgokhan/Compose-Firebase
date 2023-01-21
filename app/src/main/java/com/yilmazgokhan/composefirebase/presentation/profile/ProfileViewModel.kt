@@ -7,6 +7,7 @@ import com.yilmazgokhan.composefirebase.base.IViewEvent
 import com.yilmazgokhan.composefirebase.base.IViewState
 import com.yilmazgokhan.composefirebase.data.repository.model.User
 import com.yilmazgokhan.composefirebase.domain.usecase.GetUserUseCase
+import com.yilmazgokhan.composefirebase.domain.usecase.RegisterUseCase
 import com.yilmazgokhan.composefirebase.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
+    private val registerUseCase: RegisterUseCase,
 ) : BaseViewModel<ProfileViewState, ProfileViewEvent>() {
 
     override fun createInitialState(): ProfileViewState = ProfileViewState()
@@ -34,6 +36,32 @@ class ProfileViewModel @Inject constructor(
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
                     result.exception.message?.let {
+                        onTriggerEvent(ProfileViewEvent.SetGetUSerError(it))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateUser() {
+        onTriggerEvent(ProfileViewEvent.SetLoading(true))
+        viewModelScope.launch {
+            when (val response = registerUseCase.execute(
+                RegisterUseCase.Input(
+                    username = state.username,
+                    name = state.name,
+                    phone = state.phone,
+                    mail = state.email,
+                    address = state.address,
+                    gender = false,
+                )
+            )) {
+                is State.Success -> {
+                    onTriggerEvent(ProfileViewEvent.SetUser(response.data))
+                }
+                is State.Error -> {
+                    LogUtils.d("${response.exception}")
+                    response.exception.message?.let {
                         onTriggerEvent(ProfileViewEvent.SetGetUSerError(it))
                     }
                 }
@@ -116,6 +144,7 @@ class ProfileViewModel @Inject constructor(
                             editMode = false
                         )
                     }
+                    updateUser()
                 }
                 ProfileViewEvent.EditClick -> {
                     setState {
