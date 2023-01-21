@@ -32,7 +32,8 @@ fun ProfileScreen(
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(key1 = state.getUserError) {
         launch {
-            scaffoldState.snackbarHostState.showSnackbar(state.getUserError)
+            if (state.getUserError.isNotEmpty())
+                scaffoldState.snackbarHostState.showSnackbar(state.getUserError)
         }
     }
 

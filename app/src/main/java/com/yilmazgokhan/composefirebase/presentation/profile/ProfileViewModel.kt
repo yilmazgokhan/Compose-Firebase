@@ -23,6 +23,24 @@ class ProfileViewModel @Inject constructor(
         getUser()
     }
 
+    private fun getUser() {
+        onTriggerEvent(ProfileViewEvent.SetLoading(true))
+        viewModelScope.launch {
+            when (val result = getUserUseCase.execute(input = null)) {
+                is State.Success -> {
+                    val user = result.data
+                    onTriggerEvent(ProfileViewEvent.SetUser(user))
+                }
+                is State.Error -> {
+                    LogUtils.d("${result.exception}")
+                    result.exception.message?.let {
+                        onTriggerEvent(ProfileViewEvent.SetGetUSerError(it))
+                    }
+                }
+            }
+        }
+    }
+
     override fun onTriggerEvent(event: ProfileViewEvent) {
         viewModelScope.launch {
             when (event) {
@@ -103,48 +121,6 @@ class ProfileViewModel @Inject constructor(
                     setState {
                         state.copy(
                             editMode = true
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getUser() {
-        viewModelScope.launch {
-            when (val result = getUserUseCase.execute(input = null)) {
-                is State.Success -> {
-                    val user = result.data
-                    setEvent(ProfileViewEvent.SetUser(user))
-                    /*
-                    setState {
-                        state.copy(
-                            isLoading = false,
-                            username = user.username ?: "",
-                            name = user.name ?: "",
-                            phone = user.phone ?: "",
-                            email = "",
-                            address = user.address ?: "",
-                            gender = user.gender ?: false
-                        )
-                    }
-                     */
-                    // TODO: call event
-                }
-                is State.Error -> {
-                    LogUtils.d("${result.exception}")
-                    result.exception.message?.let {
-                        setEvent(ProfileViewEvent.SetGetUSerError(it))
-                    }
-                    setEvent(ProfileViewEvent.SetLoading(true))
-
-                    viewModelScope.launch {
-                        setEvent(ProfileViewEvent.SetAddress("true"))
-                    }
-                    setState {
-                        state.copy(
-                            email = "event.email",
-                            getUserError = "asdasdasd"
                         )
                     }
                 }
