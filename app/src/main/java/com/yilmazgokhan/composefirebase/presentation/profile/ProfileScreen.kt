@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -16,6 +18,7 @@ import com.yilmazgokhan.composefirebase.R
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
 import com.yilmazgokhan.composefirebase.ui.component.DefaultTextField
 import com.yilmazgokhan.composefirebase.ui.component.ToolbarWithEndIcon
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -24,6 +27,15 @@ fun ProfileScreen(
     navigateToBack: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
+
+
+    val scaffoldState = rememberScaffoldState()
+    LaunchedEffect(key1 = state.getUserError) {
+        launch {
+            scaffoldState.snackbarHostState.showSnackbar(state.getUserError)
+        }
+    }
+
 
     //Prepare header end icon
     val endIcon = if (state.editMode) {
@@ -47,7 +59,8 @@ fun ProfileScreen(
                 }
             )
         },
-        loading = state.isLoading
+        loading = state.isLoading,
+        scaffoldState = scaffoldState
     ) { padding ->
         Column(modifier = Modifier
             .padding(4.dp)

@@ -29,6 +29,14 @@ class ProfileViewModel @Inject constructor(
                 ProfileViewEvent.ProfileEvent -> {
                     getUser()
                 }
+                is ProfileViewEvent.SetGetUSerError -> {
+                    setState {
+                        state.copy(
+                            isLoading = false,
+                            getUserError = event.value
+                        )
+                    }
+                }
                 is ProfileViewEvent.SetLoading -> {
                     setState {
                         state.copy(
@@ -107,6 +115,8 @@ class ProfileViewModel @Inject constructor(
             when (val result = getUserUseCase.execute(input = null)) {
                 is State.Success -> {
                     val user = result.data
+                    setEvent(ProfileViewEvent.SetUser(user))
+                    /*
                     setState {
                         state.copy(
                             isLoading = false,
@@ -118,11 +128,25 @@ class ProfileViewModel @Inject constructor(
                             gender = user.gender ?: false
                         )
                     }
+                     */
                     // TODO: call event
                 }
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
-                    result.exception
+                    result.exception.message?.let {
+                        setEvent(ProfileViewEvent.SetGetUSerError(it))
+                    }
+                    setEvent(ProfileViewEvent.SetLoading(true))
+
+                    viewModelScope.launch {
+                        setEvent(ProfileViewEvent.SetAddress("true"))
+                    }
+                    setState {
+                        state.copy(
+                            email = "event.email",
+                            getUserError = "asdasdasd"
+                        )
+                    }
                 }
             }
         }
@@ -132,6 +156,7 @@ class ProfileViewModel @Inject constructor(
 
 sealed class ProfileViewEvent : IViewEvent {
     object ProfileEvent : ProfileViewEvent()
+    class SetGetUSerError(val value: String) : ProfileViewEvent()
     class SetLoading(val status: Boolean) : ProfileViewEvent()
     class SetUser(val user: User) : ProfileViewEvent()
     class SetName(val name: String) : ProfileViewEvent()
@@ -144,6 +169,8 @@ sealed class ProfileViewEvent : IViewEvent {
 }
 
 data class ProfileViewState(
+    val isLoading: Boolean = false,
+    val getUserError: String = "",
     val username: String = "",
     val name: String = "",
     val phone: String = "",
@@ -153,8 +180,6 @@ data class ProfileViewState(
     val newsletterCheck: Boolean = false,
     val gender: Boolean = false,
     val editMode: Boolean = false,
-    val isDisplay: Boolean = false,
-    val isLoading: Boolean = false,
 ) : IViewState
 
 /* todo
