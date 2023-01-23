@@ -30,11 +30,11 @@ class SplashViewModel @Inject constructor(
             else AuthenticationState.UNAUTHENTICATED
 
             delay(2000)
-            onTriggerEvent(SplashViewEvent.SetAuthState(authState))
+            triggerEvent(SplashViewEvent.SetAuthState(authState))
         }
     }
 
-    override fun onTriggerEvent(event: SplashViewEvent) {
+    override fun triggerEvent(event: SplashViewEvent) {
         viewModelScope.launch {
             when (event) {
                 SplashViewEvent.SplashEvent -> {

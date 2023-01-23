@@ -26,17 +26,17 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getUser() {
-        onTriggerEvent(ProfileViewEvent.SetLoading(true))
+        triggerEvent(ProfileViewEvent.SetLoading(true))
         viewModelScope.launch {
             when (val result = getUserUseCase.execute(input = null)) {
                 is State.Success -> {
                     val user = result.data
-                    onTriggerEvent(ProfileViewEvent.SetUser(user))
+                    triggerEvent(ProfileViewEvent.SetUser(user))
                 }
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
                     result.exception.message?.let {
-                        onTriggerEvent(ProfileViewEvent.SetGetUSerError(it))
+                        triggerEvent(ProfileViewEvent.SetGetUSerError(it))
                     }
                 }
             }
@@ -44,7 +44,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun updateUser() {
-        onTriggerEvent(ProfileViewEvent.SetLoading(true))
+        triggerEvent(ProfileViewEvent.SetLoading(true))
         viewModelScope.launch {
             when (val response = registerUseCase.execute(
                 RegisterUseCase.Input(
@@ -57,19 +57,19 @@ class ProfileViewModel @Inject constructor(
                 )
             )) {
                 is State.Success -> {
-                    onTriggerEvent(ProfileViewEvent.SetUser(response.data))
+                    triggerEvent(ProfileViewEvent.SetUser(response.data))
                 }
                 is State.Error -> {
                     LogUtils.d("${response.exception}")
                     response.exception.message?.let {
-                        onTriggerEvent(ProfileViewEvent.SetGetUSerError(it))
+                        triggerEvent(ProfileViewEvent.SetGetUSerError(it))
                     }
                 }
             }
         }
     }
 
-    override fun onTriggerEvent(event: ProfileViewEvent) {
+    override fun triggerEvent(event: ProfileViewEvent) {
         viewModelScope.launch {
             when (event) {
                 ProfileViewEvent.ProfileEvent -> {

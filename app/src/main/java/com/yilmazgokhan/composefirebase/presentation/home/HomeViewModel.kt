@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(
 
     override fun createInitialState(): HomeViewState = HomeViewState()
 
-    override fun onTriggerEvent(event: HomeViewEvent) {
+    override fun triggerEvent(event: HomeViewEvent) {
         viewModelScope.launch {
             when (event) {
                 HomeViewEvent.HomeEvent -> {

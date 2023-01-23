@@ -1,7 +1,6 @@
 package com.yilmazgokhan.composefirebase.presentation.login
 
 import androidx.lifecycle.viewModelScope
-import com.blankj.utilcode.util.LogUtils
 import com.google.firebase.auth.AuthCredential
 import com.yilmazgokhan.composefirebase.base.BaseViewModel
 import com.yilmazgokhan.composefirebase.base.IViewEvent
@@ -23,10 +22,10 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             when (loginUseCase.execute(LoginUseCase.Input(authCredential = authCredential))) {
                 is State.Success -> {
-                    onTriggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.AUTHENTICATED))
+                    triggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.AUTHENTICATED))
                 }
                 is State.Error -> {
-                    onTriggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.UNAUTHENTICATED))
+                    triggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.UNAUTHENTICATED))
                 }
             }
         }
@@ -34,7 +33,7 @@ class LoginViewModel @Inject constructor(
 
     override fun createInitialState(): LoginViewState = LoginViewState()
 
-    override fun onTriggerEvent(event: LoginViewEvent) {
+    override fun triggerEvent(event: LoginViewEvent) {
         viewModelScope.launch {
             when (event) {
                 is LoginViewEvent.SetLoginState -> {

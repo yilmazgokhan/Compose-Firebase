@@ -44,7 +44,7 @@ class RegisterViewModel @Inject constructor(
 
     override fun createInitialState(): RegisterViewState = RegisterViewState()
 
-    override fun onTriggerEvent(event: RegisterViewEvent) {
+    override fun triggerEvent(event: RegisterViewEvent) {
         viewModelScope.launch {
             when (event) {
                 is RegisterViewEvent.RegisterEvent -> {

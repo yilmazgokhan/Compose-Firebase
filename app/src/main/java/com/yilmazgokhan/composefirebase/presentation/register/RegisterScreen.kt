@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.yilmazgokhan.composefirebase.presentation.profile.ProfileViewEvent
 import com.yilmazgokhan.composefirebase.ui.component.ButtonWithBorder
 import com.yilmazgokhan.composefirebase.ui.component.DefaultTextField
 import com.yilmazgokhan.composefirebase.ui.component.DefaultToolbar
@@ -62,7 +61,7 @@ fun RegisterScreen(
                         )
                     },
                     onValueChange = {
-                        viewModel.onTriggerEvent(RegisterViewEvent.SetName(it))
+                        viewModel.triggerEvent(RegisterViewEvent.SetName(it))
                     },
                     label = { Text(text = "Name") },
                     placeholder = { Text(text = "Name") },
@@ -75,7 +74,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Person,
                     iconText = "personIcon",
                     onValueChange = {
-                        viewModel.onTriggerEvent(RegisterViewEvent.SetUsername(it))
+                        viewModel.triggerEvent(RegisterViewEvent.SetUsername(it))
                     },
                     label = "Username",
                     placeholder = "Username",
@@ -87,7 +86,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Phone,
                     iconText = "phoneIcon",
                     onValueChange = {
-                        viewModel.onTriggerEvent(RegisterViewEvent.SetPhone(it))
+                        viewModel.triggerEvent(RegisterViewEvent.SetPhone(it))
                     },
                     label = "Phone",
                     placeholder = "Phone",
@@ -100,7 +99,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Email,
                     iconText = "emailIcon",
                     onValueChange = {
-                        viewModel.onTriggerEvent(RegisterViewEvent.SetEmail(it))
+                        viewModel.triggerEvent(RegisterViewEvent.SetEmail(it))
                     },
                     label = "Email",
                     placeholder = "Email",
@@ -113,7 +112,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Home,
                     iconText = "addressIcon",
                     onValueChange = {
-                        viewModel.onTriggerEvent(RegisterViewEvent.SetAddress(it))
+                        viewModel.triggerEvent(RegisterViewEvent.SetAddress(it))
                     },
                     label = "Address",
                     placeholder = "Address",
@@ -167,7 +166,7 @@ fun TermsAndConditionsSelection(state: RegisterViewState, viewModel: RegisterVie
     ) {
         Checkbox(
             checked = state.termsCheck,
-            onCheckedChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetTermsCheck(it)) }
+            onCheckedChange = { viewModel.triggerEvent(RegisterViewEvent.SetTermsCheck(it)) }
         )
         Spacer(modifier = Modifier.width(4.dp))
         TextSecondary(text = "I agree with terms and conditions")
@@ -179,7 +178,7 @@ fun TermsAndConditionsSelection(state: RegisterViewState, viewModel: RegisterVie
     ) {
         Checkbox(
             checked = state.newsletterCheck,
-            onCheckedChange = { viewModel.onTriggerEvent(RegisterViewEvent.SetNewsletterCheck(it)) }
+            onCheckedChange = { viewModel.triggerEvent(RegisterViewEvent.SetNewsletterCheck(it)) }
         )
         Spacer(modifier = Modifier.width(4.dp))
         TextSecondary(text = "I want to receive the newsletter")
