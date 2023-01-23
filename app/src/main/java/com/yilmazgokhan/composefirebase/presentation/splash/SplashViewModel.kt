@@ -30,13 +30,7 @@ class SplashViewModel @Inject constructor(
             else AuthenticationState.UNAUTHENTICATED
 
             delay(2000)
-
-            setState {
-                state.copy(
-                    isLoading = false,
-                    authState = authState
-                )
-            }
+            onTriggerEvent(SplashViewEvent.SetAuthState(authState))
         }
     }
 
@@ -51,6 +45,14 @@ class SplashViewModel @Inject constructor(
                         )
                     }
                 }
+                is SplashViewEvent.SetAuthState -> {
+                    setState {
+                        state.copy(
+                            isLoading = false,
+                            authState = event.authState
+                        )
+                    }
+                }
             }
         }
     }
@@ -58,6 +60,7 @@ class SplashViewModel @Inject constructor(
 
 sealed class SplashViewEvent : IViewEvent {
     object SplashEvent : SplashViewEvent()
+    class SetAuthState(val authState: AuthenticationState) : SplashViewEvent()
 }
 
 data class SplashViewState(
