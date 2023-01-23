@@ -18,27 +18,15 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
 ) : BaseViewModel<LoginViewState, LoginViewEvent>() {
 
-    init {}
-
     fun loginWithCredential(authCredential: AuthCredential) {
         setState { state.copy(isLoading = true) }
         viewModelScope.launch {
             when (loginUseCase.execute(LoginUseCase.Input(authCredential = authCredential))) {
                 is State.Success -> {
-                    setState {
-                        state.copy(
-                            loginState = AuthenticationState.AUTHENTICATED,
-                            isLoading = false
-                        )
-                    }
+                    onTriggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.AUTHENTICATED))
                 }
                 is State.Error -> {
-                    setState {
-                        state.copy(
-                            loginState = AuthenticationState.UNAUTHENTICATED,
-                            isLoading = false
-                        )
-                    }
+                    onTriggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.UNAUTHENTICATED))
                 }
             }
         }
@@ -52,6 +40,7 @@ class LoginViewModel @Inject constructor(
                 is LoginViewEvent.SetLoginState -> {
                     setState {
                         state.copy(
+                            isLoading = false,
                             loginState = event.state
                         )
                     }
