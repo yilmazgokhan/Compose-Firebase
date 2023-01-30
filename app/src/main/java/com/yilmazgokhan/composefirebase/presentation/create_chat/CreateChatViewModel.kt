@@ -25,15 +25,25 @@ class CreateChatViewModel @Inject constructor(
                 CreateChatViewEvent.CreateChatEvent -> {
 
                 }
+                is CreateChatViewEvent.SetDescription -> {
+
+                }
+                is CreateChatViewEvent.SetTitle -> {
+
+                }
             }
         }
     }
 }
 
-sealed class CreateChatViewEvent : IViewEvent {
+    sealed class CreateChatViewEvent : IViewEvent {
     object CreateChatEvent : CreateChatViewEvent()
+    class SetTitle(val name: String) : CreateChatViewEvent()
+    class SetDescription(val username: String) : CreateChatViewEvent()
 }
 
 data class CreateChatViewState(
     val isLoading: Boolean = false,
+    val title: String = "",
+    val description: String = "",
 ) : IViewState
