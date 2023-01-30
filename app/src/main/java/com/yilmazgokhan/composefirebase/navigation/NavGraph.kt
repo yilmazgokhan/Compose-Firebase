@@ -10,6 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.yilmazgokhan.composefirebase.presentation.create_chat.CreateChatScreen
 import com.yilmazgokhan.composefirebase.presentation.home.HomeScreen
 import com.yilmazgokhan.composefirebase.presentation.login.LoginScreen
 import com.yilmazgokhan.composefirebase.presentation.profile.ProfileScreen
@@ -83,11 +84,24 @@ fun NavGraph(startDestination: String = NavDirections.Splash.route) {
                         navController.navigate(
                             route = NavDirections.Profile.route
                         )
+                    },
+                    navigateToCreateChat = {
+                        navController.navigate(
+                            route = NavDirections.CreateChat.route
+                        )
                     }
                 )
             }
             composable(NavDirections.Profile.route) {
                 ProfileScreen(
+                    hiltViewModel(),
+                    navigateToBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable(NavDirections.CreateChat.route) {
+                CreateChatScreen(
                     hiltViewModel(),
                     navigateToBack = {
                         navController.popBackStack()
