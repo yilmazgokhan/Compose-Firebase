@@ -11,39 +11,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateChatViewModel @Inject constructor(
-) : BaseViewModel<CreateChatViewState, CreateChatViewEvent>() {
+) : BaseViewModel<CreateChatViewModel.ViewState, CreateChatViewModel.ViewEvent>() {
 
     init {
         LogUtils.d("$this")
     }
 
-    override fun createInitialState(): CreateChatViewState = CreateChatViewState()
+    override fun createInitialState(): ViewState = ViewState()
 
-    override fun triggerEvent(event: CreateChatViewEvent) {
+    override fun triggerEvent(event: ViewEvent) {
         viewModelScope.launch {
             when (event) {
-                CreateChatViewEvent.CreateChatEvent -> {
+                ViewEvent.Event -> {
 
                 }
-                is CreateChatViewEvent.SetDescription -> {
+                is ViewEvent.SetDescription -> {
 
                 }
-                is CreateChatViewEvent.SetTitle -> {
+                is ViewEvent.SetTitle -> {
 
                 }
             }
         }
     }
-}
 
-    sealed class CreateChatViewEvent : IViewEvent {
-    object CreateChatEvent : CreateChatViewEvent()
-    class SetTitle(val name: String) : CreateChatViewEvent()
-    class SetDescription(val username: String) : CreateChatViewEvent()
-}
+    sealed class ViewEvent : IViewEvent {
+        object Event : ViewEvent()
+        class SetTitle(val name: String) : ViewEvent()
+        class SetDescription(val username: String) : ViewEvent()
+    }
 
-data class CreateChatViewState(
-    val isLoading: Boolean = false,
-    val title: String = "",
-    val description: String = "",
-) : IViewState
+    data class ViewState(
+        val isLoading: Boolean = false,
+        val title: String = "",
+        val description: String = "",
+    ) : IViewState
+}

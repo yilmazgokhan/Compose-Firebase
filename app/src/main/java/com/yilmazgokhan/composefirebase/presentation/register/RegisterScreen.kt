@@ -61,7 +61,7 @@ fun RegisterScreen(
                         )
                     },
                     onValueChange = {
-                        viewModel.triggerEvent(RegisterViewEvent.SetName(it))
+                        viewModel.triggerEvent(RegisterViewModel.ViewEvent.SetName(it))
                     },
                     label = { Text(text = "Name") },
                     placeholder = { Text(text = "Name") },
@@ -74,7 +74,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Person,
                     iconText = "personIcon",
                     onValueChange = {
-                        viewModel.triggerEvent(RegisterViewEvent.SetUsername(it))
+                        viewModel.triggerEvent(RegisterViewModel.ViewEvent.SetUsername(it))
                     },
                     label = "Username",
                     placeholder = "Username",
@@ -86,7 +86,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Phone,
                     iconText = "phoneIcon",
                     onValueChange = {
-                        viewModel.triggerEvent(RegisterViewEvent.SetPhone(it))
+                        viewModel.triggerEvent(RegisterViewModel.ViewEvent.SetPhone(it))
                     },
                     label = "Phone",
                     placeholder = "Phone",
@@ -99,7 +99,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Email,
                     iconText = "emailIcon",
                     onValueChange = {
-                        viewModel.triggerEvent(RegisterViewEvent.SetEmail(it))
+                        viewModel.triggerEvent(RegisterViewModel.ViewEvent.SetEmail(it))
                     },
                     label = "Email",
                     placeholder = "Email",
@@ -112,7 +112,7 @@ fun RegisterScreen(
                     iconVector = Icons.Default.Home,
                     iconText = "addressIcon",
                     onValueChange = {
-                        viewModel.triggerEvent(RegisterViewEvent.SetAddress(it))
+                        viewModel.triggerEvent(RegisterViewModel.ViewEvent.SetAddress(it))
                     },
                     label = "Address",
                     placeholder = "Address",
@@ -160,13 +160,18 @@ fun GenderSelection() {
 }
 
 @Composable
-fun TermsAndConditionsSelection(state: RegisterViewState, viewModel: RegisterViewModel) {
+fun TermsAndConditionsSelection(
+    state: RegisterViewModel.ViewState,
+    viewModel: RegisterViewModel,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
             checked = state.termsCheck,
-            onCheckedChange = { viewModel.triggerEvent(RegisterViewEvent.SetTermsCheck(it)) }
+            onCheckedChange = {
+                viewModel.triggerEvent(RegisterViewModel.ViewEvent.SetTermsCheck(it))
+            }
         )
         Spacer(modifier = Modifier.width(4.dp))
         TextSecondary(text = "I agree with terms and conditions")
@@ -178,7 +183,9 @@ fun TermsAndConditionsSelection(state: RegisterViewState, viewModel: RegisterVie
     ) {
         Checkbox(
             checked = state.newsletterCheck,
-            onCheckedChange = { viewModel.triggerEvent(RegisterViewEvent.SetNewsletterCheck(it)) }
+            onCheckedChange = {
+                viewModel.triggerEvent(RegisterViewModel.ViewEvent.SetNewsletterCheck(it))
+            }
         )
         Spacer(modifier = Modifier.width(4.dp))
         TextSecondary(text = "I want to receive the newsletter")

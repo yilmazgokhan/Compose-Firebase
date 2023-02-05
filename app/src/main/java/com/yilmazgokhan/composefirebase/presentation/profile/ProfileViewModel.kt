@@ -17,26 +17,26 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
     private val registerUseCase: RegisterUseCase,
-) : BaseViewModel<ProfileViewState, ProfileViewEvent>() {
+) : BaseViewModel<ProfileViewModel.ViewState, ProfileViewModel.ViewEvent>() {
 
-    override fun createInitialState(): ProfileViewState = ProfileViewState()
+    override fun createInitialState(): ViewState = ViewState()
 
     init {
         getUser()
     }
 
     private fun getUser() {
-        triggerEvent(ProfileViewEvent.SetLoading(true))
+        triggerEvent(ViewEvent.SetLoading(true))
         viewModelScope.launch {
             when (val result = getUserUseCase.execute(input = null)) {
                 is State.Success -> {
                     val user = result.data
-                    triggerEvent(ProfileViewEvent.SetUser(user))
+                    triggerEvent(ViewEvent.SetUser(user))
                 }
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
                     result.exception.message?.let {
-                        triggerEvent(ProfileViewEvent.SetGetUSerError(it))
+                        triggerEvent(ViewEvent.SetGetUSerError(it))
                     }
                 }
             }
@@ -44,7 +44,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun updateUser() {
-        triggerEvent(ProfileViewEvent.SetLoading(true))
+        triggerEvent(ViewEvent.SetLoading(true))
         viewModelScope.launch {
             when (val response = registerUseCase.execute(
                 RegisterUseCase.Input(
@@ -57,25 +57,25 @@ class ProfileViewModel @Inject constructor(
                 )
             )) {
                 is State.Success -> {
-                    triggerEvent(ProfileViewEvent.SetUser(response.data))
+                    triggerEvent(ViewEvent.SetUser(response.data))
                 }
                 is State.Error -> {
                     LogUtils.d("${response.exception}")
                     response.exception.message?.let {
-                        triggerEvent(ProfileViewEvent.SetGetUSerError(it))
+                        triggerEvent(ViewEvent.SetGetUSerError(it))
                     }
                 }
             }
         }
     }
 
-    override fun triggerEvent(event: ProfileViewEvent) {
+    override fun triggerEvent(event: ViewEvent) {
         viewModelScope.launch {
             when (event) {
-                ProfileViewEvent.ProfileEvent -> {
+                ViewEvent.Event -> {
                     getUser()
                 }
-                is ProfileViewEvent.SetGetUSerError -> {
+                is ViewEvent.SetGetUSerError -> {
                     setState {
                         state.copy(
                             isLoading = false,
@@ -83,14 +83,14 @@ class ProfileViewModel @Inject constructor(
                         )
                     }
                 }
-                is ProfileViewEvent.SetLoading -> {
+                is ViewEvent.SetLoading -> {
                     setState {
                         state.copy(
                             isLoading = event.status
                         )
                     }
                 }
-                is ProfileViewEvent.SetUser -> {
+                is ViewEvent.SetUser -> {
                     setState {
                         state.copy(
                             isLoading = false,
@@ -103,42 +103,42 @@ class ProfileViewModel @Inject constructor(
                         )
                     }
                 }
-                is ProfileViewEvent.SetName -> {
+                is ViewEvent.SetName -> {
                     setState {
                         state.copy(
                             name = event.name
                         )
                     }
                 }
-                is ProfileViewEvent.SetAddress -> {
+                is ViewEvent.SetAddress -> {
                     setState {
                         state.copy(
                             address = event.address
                         )
                     }
                 }
-                is ProfileViewEvent.SetEmail -> {
+                is ViewEvent.SetEmail -> {
                     setState {
                         state.copy(
                             email = event.email
                         )
                     }
                 }
-                is ProfileViewEvent.SetPhone -> {
+                is ViewEvent.SetPhone -> {
                     setState {
                         state.copy(
                             phone = event.phone
                         )
                     }
                 }
-                is ProfileViewEvent.SetUsername -> {
+                is ViewEvent.SetUsername -> {
                     setState {
                         state.copy(
                             username = event.username
                         )
                     }
                 }
-                ProfileViewEvent.ApplyClick -> {
+                ViewEvent.ApplyClick -> {
                     setState {
                         state.copy(
                             editMode = false
@@ -146,7 +146,7 @@ class ProfileViewModel @Inject constructor(
                     }
                     updateUser()
                 }
-                ProfileViewEvent.EditClick -> {
+                ViewEvent.EditClick -> {
                     setState {
                         state.copy(
                             editMode = true
@@ -156,36 +156,35 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
+
+    sealed class ViewEvent : IViewEvent {
+        object Event : ViewEvent()
+        class SetGetUSerError(val value: String) : ViewEvent()
+        class SetLoading(val status: Boolean) : ViewEvent()
+        class SetUser(val user: User) : ViewEvent()
+        class SetName(val name: String) : ViewEvent()
+        class SetUsername(val username: String) : ViewEvent()
+        class SetPhone(val phone: String) : ViewEvent()
+        class SetEmail(val email: String) : ViewEvent()
+        class SetAddress(val address: String) : ViewEvent()
+        object EditClick : ViewEvent()
+        object ApplyClick : ViewEvent()
+    }
+
+    data class ViewState(
+        val isLoading: Boolean = false,
+        val getUserError: String = "",
+        val username: String = "",
+        val name: String = "",
+        val phone: String = "",
+        val email: String = "",
+        val address: String = "",
+        val termsCheck: Boolean = false,
+        val newsletterCheck: Boolean = false,
+        val gender: Boolean = false,
+        val editMode: Boolean = false,
+    ) : IViewState
 }
-
-
-sealed class ProfileViewEvent : IViewEvent {
-    object ProfileEvent : ProfileViewEvent()
-    class SetGetUSerError(val value: String) : ProfileViewEvent()
-    class SetLoading(val status: Boolean) : ProfileViewEvent()
-    class SetUser(val user: User) : ProfileViewEvent()
-    class SetName(val name: String) : ProfileViewEvent()
-    class SetUsername(val username: String) : ProfileViewEvent()
-    class SetPhone(val phone: String) : ProfileViewEvent()
-    class SetEmail(val email: String) : ProfileViewEvent()
-    class SetAddress(val address: String) : ProfileViewEvent()
-    object EditClick : ProfileViewEvent()
-    object ApplyClick : ProfileViewEvent()
-}
-
-data class ProfileViewState(
-    val isLoading: Boolean = false,
-    val getUserError: String = "",
-    val username: String = "",
-    val name: String = "",
-    val phone: String = "",
-    val email: String = "",
-    val address: String = "",
-    val termsCheck: Boolean = false,
-    val newsletterCheck: Boolean = false,
-    val gender: Boolean = false,
-    val editMode: Boolean = false,
-) : IViewState
 
 /* todo
 https://developer.android.com/codelabs/basic-android-kotlin-compose-viewmodel-and-state#6

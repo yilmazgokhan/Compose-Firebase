@@ -53,9 +53,9 @@ fun ProfileScreen(
                 endIconRes = endIcon,
                 endIconClick = {
                     if (state.editMode) {
-                        viewModel.triggerEvent(ProfileViewEvent.ApplyClick)
+                        viewModel.triggerEvent(ProfileViewModel.ViewEvent.ApplyClick)
                     } else {
-                        viewModel.triggerEvent(ProfileViewEvent.EditClick)
+                        viewModel.triggerEvent(ProfileViewModel.ViewEvent.EditClick)
                     }
                 }
             )
@@ -75,7 +75,7 @@ fun ProfileScreen(
                 iconVector = Icons.Default.Person,
                 iconText = "personIcon",
                 onValueChange = {
-                    viewModel.triggerEvent(ProfileViewEvent.SetName(it))
+                    viewModel.triggerEvent(ProfileViewModel.ViewEvent.SetName(it))
                 },
                 label = "Name",
                 placeholder = "Name",
@@ -88,7 +88,7 @@ fun ProfileScreen(
                 iconVector = Icons.Default.Person,
                 iconText = "personIcon",
                 onValueChange = {
-                    viewModel.triggerEvent(ProfileViewEvent.SetUsername(it))
+                    viewModel.triggerEvent(ProfileViewModel.ViewEvent.SetUsername(it))
                 },
                 label = "Username",
                 placeholder = "Username",
@@ -101,7 +101,7 @@ fun ProfileScreen(
                 iconVector = Icons.Default.Phone,
                 iconText = "phoneIcon",
                 onValueChange = {
-                    viewModel.triggerEvent(ProfileViewEvent.SetPhone(it))
+                    viewModel.triggerEvent(ProfileViewModel.ViewEvent.SetPhone(it))
                 },
                 label = "Phone",
                 placeholder = "Phone",
@@ -115,7 +115,7 @@ fun ProfileScreen(
                 iconVector = Icons.Default.Email,
                 iconText = "emailIcon",
                 onValueChange = {
-                    viewModel.triggerEvent(ProfileViewEvent.SetEmail(it))
+                    viewModel.triggerEvent(ProfileViewModel.ViewEvent.SetEmail(it))
                 },
                 label = "Email",
                 placeholder = "Email",
@@ -129,7 +129,7 @@ fun ProfileScreen(
                 iconVector = Icons.Default.Home,
                 iconText = "homeIcon",
                 onValueChange = {
-                    viewModel.triggerEvent(ProfileViewEvent.SetAddress(it))
+                    viewModel.triggerEvent(ProfileViewModel.ViewEvent.SetAddress(it))
                 },
                 label = "Address",
                 placeholder = "Address",

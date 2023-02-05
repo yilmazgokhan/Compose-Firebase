@@ -11,29 +11,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-) : BaseViewModel<HomeViewState, HomeViewEvent>() {
+) : BaseViewModel<HomeViewModel.ViewState, HomeViewModel.ViewEvent>() {
 
     init {
         LogUtils.d("$this")
     }
 
-    override fun createInitialState(): HomeViewState = HomeViewState()
+    override fun createInitialState(): ViewState = ViewState()
 
-    override fun triggerEvent(event: HomeViewEvent) {
+    override fun triggerEvent(event: ViewEvent) {
         viewModelScope.launch {
             when (event) {
-                HomeViewEvent.HomeEvent -> {
+                ViewEvent.Event -> {
 
                 }
             }
         }
     }
-}
 
-sealed class HomeViewEvent : IViewEvent {
-    object HomeEvent : HomeViewEvent()
-}
+    sealed class ViewEvent : IViewEvent {
+        object Event : ViewEvent()
+    }
 
-data class HomeViewState(
-    val isLoading: Boolean = false,
-) : IViewState
+    data class ViewState(
+        val isLoading: Boolean = false,
+    ) : IViewState
+}

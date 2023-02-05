@@ -15,28 +15,28 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-) : BaseViewModel<LoginViewState, LoginViewEvent>() {
+) : BaseViewModel<LoginViewModel.ViewState, LoginViewModel.ViewEvent>() {
 
     fun loginWithCredential(authCredential: AuthCredential) {
         setState { state.copy(isLoading = true) }
         viewModelScope.launch {
             when (loginUseCase.execute(LoginUseCase.Input(authCredential = authCredential))) {
                 is State.Success -> {
-                    triggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.AUTHENTICATED))
+                    triggerEvent(ViewEvent.SetState(AuthenticationState.AUTHENTICATED))
                 }
                 is State.Error -> {
-                    triggerEvent(LoginViewEvent.SetLoginState(AuthenticationState.UNAUTHENTICATED))
+                    triggerEvent(ViewEvent.SetState(AuthenticationState.UNAUTHENTICATED))
                 }
             }
         }
     }
 
-    override fun createInitialState(): LoginViewState = LoginViewState()
+    override fun createInitialState(): ViewState = ViewState()
 
-    override fun triggerEvent(event: LoginViewEvent) {
+    override fun triggerEvent(event: ViewEvent) {
         viewModelScope.launch {
             when (event) {
-                is LoginViewEvent.SetLoginState -> {
+                is ViewEvent.SetState -> {
                     setState {
                         state.copy(
                             isLoading = false,
@@ -44,7 +44,7 @@ class LoginViewModel @Inject constructor(
                         )
                     }
                 }
-                is LoginViewEvent.SetLoading -> {
+                is ViewEvent.SetLoading -> {
                     setState {
                         state.copy(
                             isLoading = event.state
@@ -54,14 +54,14 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-}
 
-sealed class LoginViewEvent : IViewEvent {
-    class SetLoading(val state: Boolean) : LoginViewEvent()
-    class SetLoginState(val state: AuthenticationState) : LoginViewEvent()
-}
+    sealed class ViewEvent : IViewEvent {
+        class SetLoading(val state: Boolean) : ViewEvent()
+        class SetState(val state: AuthenticationState) : ViewEvent()
+    }
 
-data class LoginViewState(
-    val isLoading: Boolean = false,
-    val loginState: AuthenticationState? = null,
-) : IViewState
+    data class ViewState(
+        val isLoading: Boolean = false,
+        val loginState: AuthenticationState? = null,
+    ) : IViewState
+}

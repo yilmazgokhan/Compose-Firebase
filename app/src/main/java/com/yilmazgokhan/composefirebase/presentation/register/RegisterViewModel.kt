@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val registerUseCase: RegisterUseCase,
-) : BaseViewModel<RegisterViewState, RegisterViewEvent>() {
+) : BaseViewModel<RegisterViewModel.ViewState, RegisterViewModel.ViewEvent>() {
 
     init {
         LogUtils.d("$this")
@@ -42,15 +42,15 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    override fun createInitialState(): RegisterViewState = RegisterViewState()
+    override fun createInitialState(): ViewState = ViewState()
 
-    override fun triggerEvent(event: RegisterViewEvent) {
+    override fun triggerEvent(event: ViewEvent) {
         viewModelScope.launch {
             when (event) {
-                is RegisterViewEvent.RegisterEvent -> {
+                is ViewEvent.Event -> {
                     LogUtils.d("$this")
                 }
-                is RegisterViewEvent.SetAddress -> {
+                is ViewEvent.SetAddress -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -58,7 +58,7 @@ class RegisterViewModel @Inject constructor(
                         )
                     }
                 }
-                is RegisterViewEvent.SetEmail -> {
+                is ViewEvent.SetEmail -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -66,7 +66,7 @@ class RegisterViewModel @Inject constructor(
                         )
                     }
                 }
-                is RegisterViewEvent.SetUsername -> {
+                is ViewEvent.SetUsername -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -74,7 +74,7 @@ class RegisterViewModel @Inject constructor(
                         )
                     }
                 }
-                is RegisterViewEvent.SetName -> {
+                is ViewEvent.SetName -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -82,7 +82,7 @@ class RegisterViewModel @Inject constructor(
                         )
                     }
                 }
-                is RegisterViewEvent.SetPhone -> {
+                is ViewEvent.SetPhone -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -90,7 +90,7 @@ class RegisterViewModel @Inject constructor(
                         )
                     }
                 }
-                is RegisterViewEvent.SetNewsletterCheck -> {
+                is ViewEvent.SetNewsletterCheck -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -98,7 +98,7 @@ class RegisterViewModel @Inject constructor(
                         )
                     }
                 }
-                is RegisterViewEvent.SetTermsCheck -> {
+                is ViewEvent.SetTermsCheck -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -109,27 +109,27 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
-}
 
-sealed class RegisterViewEvent : IViewEvent {
-    class SetUsername(val text: String) : RegisterViewEvent()
-    class SetName(val text: String) : RegisterViewEvent()
-    class SetPhone(val text: String) : RegisterViewEvent()
-    class SetEmail(val text: String) : RegisterViewEvent()
-    class SetAddress(val text: String) : RegisterViewEvent()
-    class SetTermsCheck(val status: Boolean) : RegisterViewEvent()
-    class SetNewsletterCheck(val status: Boolean) : RegisterViewEvent()
-    object RegisterEvent : RegisterViewEvent()
-}
+    sealed class ViewEvent : IViewEvent {
+        class SetUsername(val text: String) : ViewEvent()
+        class SetName(val text: String) : ViewEvent()
+        class SetPhone(val text: String) : ViewEvent()
+        class SetEmail(val text: String) : ViewEvent()
+        class SetAddress(val text: String) : ViewEvent()
+        class SetTermsCheck(val status: Boolean) : ViewEvent()
+        class SetNewsletterCheck(val status: Boolean) : ViewEvent()
+        object Event : ViewEvent()
+    }
 
-data class RegisterViewState(
-    val username: String = "",
-    val name: String = "",
-    val phone: String = "",
-    val email: String = "",
-    val address: String = "",
-    val termsCheck: Boolean = false,
-    val newsletterCheck: Boolean = false,
-    val isDisplay: Boolean = false,
-    val isLoading: Boolean = false,
-) : IViewState
+    data class ViewState(
+        val username: String = "",
+        val name: String = "",
+        val phone: String = "",
+        val email: String = "",
+        val address: String = "",
+        val termsCheck: Boolean = false,
+        val newsletterCheck: Boolean = false,
+        val isDisplay: Boolean = false,
+        val isLoading: Boolean = false,
+    ) : IViewState
+}

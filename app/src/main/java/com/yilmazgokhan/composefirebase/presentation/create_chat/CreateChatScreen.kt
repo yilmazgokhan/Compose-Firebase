@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.Note
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,7 +30,7 @@ fun CreateChatScreen(
                 iconVector = Icons.Default.Note,
                 iconText = "noteIcon",
                 onValueChange = {
-                    viewModel.triggerEvent(CreateChatViewEvent.SetTitle(it))
+                    viewModel.triggerEvent(CreateChatViewModel.ViewEvent.SetTitle(it))
                 },
                 label = "Title",
                 placeholder = "Title",
@@ -43,7 +42,7 @@ fun CreateChatScreen(
                 iconVector = Icons.Default.Message,
                 iconText = "messageIcon",
                 onValueChange = {
-                    viewModel.triggerEvent(CreateChatViewEvent.SetDescription(it))
+                    viewModel.triggerEvent(CreateChatViewModel.ViewEvent.SetDescription(it))
                 },
                 label = "Description",
                 placeholder = "Description",

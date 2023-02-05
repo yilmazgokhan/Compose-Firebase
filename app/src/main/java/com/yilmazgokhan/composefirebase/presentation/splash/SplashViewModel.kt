@@ -15,13 +15,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val authService: AuthService,
-) : BaseViewModel<SplashViewState, SplashViewEvent>() {
+) : BaseViewModel<SplashViewModel.ViewState, SplashViewModel.ViewEvent>() {
 
     init {
         checkUser()
     }
 
-    override fun createInitialState(): SplashViewState = SplashViewState()
+    override fun createInitialState(): ViewState = ViewState()
 
     private fun checkUser() {
         viewModelScope.launch {
@@ -30,14 +30,14 @@ class SplashViewModel @Inject constructor(
             else AuthenticationState.UNAUTHENTICATED
 
             delay(2000)
-            triggerEvent(SplashViewEvent.SetAuthState(authState))
+            triggerEvent(ViewEvent.SetAuthState(authState))
         }
     }
 
-    override fun triggerEvent(event: SplashViewEvent) {
+    override fun triggerEvent(event: ViewEvent) {
         viewModelScope.launch {
             when (event) {
-                SplashViewEvent.SplashEvent -> {
+                ViewEvent.Event -> {
                     LogUtils.d("$this")
                     setState {
                         state.copy(
@@ -45,7 +45,7 @@ class SplashViewModel @Inject constructor(
                         )
                     }
                 }
-                is SplashViewEvent.SetAuthState -> {
+                is ViewEvent.SetAuthState -> {
                     setState {
                         state.copy(
                             isLoading = false,
@@ -56,14 +56,14 @@ class SplashViewModel @Inject constructor(
             }
         }
     }
-}
 
-sealed class SplashViewEvent : IViewEvent {
-    object SplashEvent : SplashViewEvent()
-    class SetAuthState(val authState: AuthenticationState) : SplashViewEvent()
-}
+    sealed class ViewEvent : IViewEvent {
+        object Event : ViewEvent()
+        class SetAuthState(val authState: AuthenticationState) : ViewEvent()
+    }
 
-data class SplashViewState(
-    val isLoading: Boolean = false,
-    val authState: AuthenticationState? = null,
-) : IViewState
+    data class ViewState(
+        val isLoading: Boolean = false,
+        val authState: AuthenticationState? = null,
+    ) : IViewState
+}
