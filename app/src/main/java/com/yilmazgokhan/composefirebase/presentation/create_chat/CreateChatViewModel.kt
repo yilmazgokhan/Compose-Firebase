@@ -36,6 +36,9 @@ class CreateChatViewModel @Inject constructor(
                         )
                     }
                 }
+                ViewEvent.CreateClicked -> {
+
+                }
             }
         }
     }
