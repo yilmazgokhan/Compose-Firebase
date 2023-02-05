@@ -22,23 +22,28 @@ class CreateChatViewModel @Inject constructor(
     override fun triggerEvent(event: ViewEvent) {
         viewModelScope.launch {
             when (event) {
-                ViewEvent.Event -> {
-
-                }
                 is ViewEvent.SetDescription -> {
-
+                    setState {
+                        state.copy(
+                            description = event.description
+                        )
+                    }
                 }
                 is ViewEvent.SetTitle -> {
-
+                    setState {
+                        state.copy(
+                            title = event.title
+                        )
+                    }
                 }
             }
         }
     }
 
     sealed class ViewEvent : IViewEvent {
-        object Event : ViewEvent()
-        class SetTitle(val name: String) : ViewEvent()
-        class SetDescription(val username: String) : ViewEvent()
+        class SetTitle(val title: String) : ViewEvent()
+        class SetDescription(val description: String) : ViewEvent()
+        object CreateClicked : ViewEvent()
     }
 
     data class ViewState(
