@@ -17,7 +17,10 @@ class ChatRepositoryImpl @Inject constructor(
         userId: String,
     ): State<Chat> {
         return try {
+            val random = (0..10000).random()
+            val id = userId + random
             when (val response = chatDatasource.createChat(
+                id = id,
                 title = title,
                 description = description,
                 userId = userId

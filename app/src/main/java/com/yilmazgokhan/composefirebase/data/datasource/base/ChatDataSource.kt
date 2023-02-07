@@ -6,6 +6,7 @@ import com.yilmazgokhan.composefirebase.util.State
 interface ChatDataSource {
 
     suspend fun createChat(
+        id: String,
         title: String,
         description: String,
         userId: String,

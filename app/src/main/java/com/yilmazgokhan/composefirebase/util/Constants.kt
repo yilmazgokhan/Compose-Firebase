@@ -8,5 +8,6 @@ object Constants {
 
     object Firestore {
         const val USERS = "users"
+        const val CHATS = "chat"
     }
 }
