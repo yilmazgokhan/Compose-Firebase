@@ -1,9 +1,11 @@
 package com.yilmazgokhan.composefirebase.di
 
+import com.yilmazgokhan.composefirebase.data.repository.base.ChatRepository
 import com.yilmazgokhan.composefirebase.data.repository.base.GetUserRepository
 import com.yilmazgokhan.composefirebase.data.repository.base.LoginRepository
 import com.yilmazgokhan.composefirebase.data.repository.base.RegisterRepository
 import com.yilmazgokhan.composefirebase.domain.sdk.AuthService
+import com.yilmazgokhan.composefirebase.domain.usecase.CreateChatUseCase
 import com.yilmazgokhan.composefirebase.domain.usecase.GetUserUseCase
 import com.yilmazgokhan.composefirebase.domain.usecase.LoginUseCase
 import com.yilmazgokhan.composefirebase.domain.usecase.RegisterUseCase
@@ -36,4 +38,11 @@ class UseCaseModule {
         authService: AuthService,
         getUserRepository: GetUserRepository,
     ) = GetUserUseCase(authService, getUserRepository)
+
+    @ViewModelScoped
+    @Provides
+    fun provideCreateChatUseCase(
+        authService: AuthService,
+        chatRepository: ChatRepository,
+    ) = CreateChatUseCase(authService, chatRepository)
 }
