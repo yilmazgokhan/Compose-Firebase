@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.yilmazgokhan.composefirebase.ui.component.ButtonWithBorder
 import com.yilmazgokhan.composefirebase.ui.component.DefaultScaffold
 import com.yilmazgokhan.composefirebase.ui.component.DefaultTextField
 import com.yilmazgokhan.composefirebase.ui.component.DefaultToolbar
@@ -22,8 +23,9 @@ fun CreateChatScreen(
     val state by viewModel.uiState.collectAsState()
 
     DefaultScaffold(topBar = { TopBar(navigateToBack) },
+        bottomBar = { BottomBar(viewModel) },
         loading = state.isLoading) {
-        Column() {
+        Column {
             DefaultTextField(
                 modifier = Modifier.padding(vertical = 4.dp),
                 value = state.title,
@@ -56,5 +58,13 @@ private fun TopBar(endIconClick: () -> Unit) {
     DefaultToolbar(
         title = "Create Chat",
         onBackPressClick = endIconClick
+    )
+}
+
+@Composable
+private fun BottomBar(viewModel: CreateChatViewModel) {
+    ButtonWithBorder(
+        text = "Create",
+        click = { viewModel.triggerEvent(CreateChatViewModel.ViewEvent.CreateClicked) }
     )
 }
