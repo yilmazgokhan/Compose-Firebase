@@ -14,4 +14,6 @@ interface ChatDataSource {
     ): State<ChatDTO>
 
     suspend fun getChat(): State<Any>
+
+    suspend fun getAllChats(): State<List<ChatDTO>>
 }

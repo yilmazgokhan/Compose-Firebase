@@ -16,7 +16,7 @@ class ChatRepositoryImpl @Inject constructor(
         description: String,
         userId: String,
         date: Long,
-        ): State<Chat> {
+    ): State<Chat> {
         return try {
             val random = (0..10000).random()
             val id = userId + random
@@ -30,12 +30,23 @@ class ChatRepositoryImpl @Inject constructor(
                 is State.Success -> State.Success(response.data.mapModel())
                 is State.Error -> response
             }
-        } catch (e: Exception) {
-            State.Error(e)
+        } catch (exception: Exception) {
+            State.Error(exception)
         }
     }
 
     override suspend fun getChat(): State<Any> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllChats(): State<List<Chat>> {
+        return try {
+            when (val response = chatDatasource.getAllChats()) {
+                is State.Success -> State.Success(response.data.map { it.mapModel() })
+                is State.Error -> response
+            }
+        } catch (exception: Exception) {
+            State.Error(exception)
+        }
     }
 }

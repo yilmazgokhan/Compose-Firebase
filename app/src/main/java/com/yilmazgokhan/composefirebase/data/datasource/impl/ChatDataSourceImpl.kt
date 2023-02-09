@@ -35,13 +35,27 @@ class ChatDataSourceImpl @Inject constructor(
                 State.Success(data)
             else
                 State.Error(ChatNotFoundException("Chat not found!"))
-        } catch (e: Exception) {
-            State.Error(e)
+        } catch (exception: Exception) {
+            State.Error(exception)
         }
     }
 
     override suspend fun getChat(): State<Any> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllChats(): State<List<ChatDTO>> {
+        return try {
+            val chatsRef = firebaseFirestore.collection(CHATS).get().await()
+            val data = chatsRef.toObjects(ChatDTO::class.java)
+            if (data.isNotEmpty())
+                State.Success(data)
+            else
+                State.Error(ChatNotFoundException("Chat not found!"))
+
+        } catch (exception: Exception) {
+            State.Error(exception)
+        }
     }
 }
 

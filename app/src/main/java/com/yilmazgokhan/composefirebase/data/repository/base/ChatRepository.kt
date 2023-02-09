@@ -13,4 +13,6 @@ interface ChatRepository {
     ): State<Chat>
 
     suspend fun getChat(): State<Any>
+
+    suspend fun getAllChats(): State<List<Chat>>
 }
