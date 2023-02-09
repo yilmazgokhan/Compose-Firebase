@@ -15,7 +15,8 @@ class ChatRepositoryImpl @Inject constructor(
         title: String,
         description: String,
         userId: String,
-    ): State<Chat> {
+        date: Long,
+        ): State<Chat> {
         return try {
             val random = (0..10000).random()
             val id = userId + random
@@ -23,7 +24,8 @@ class ChatRepositoryImpl @Inject constructor(
                 id = id,
                 title = title,
                 description = description,
-                userId = userId
+                userId = userId,
+                date = date
             )) {
                 is State.Success -> State.Success(response.data.mapModel())
                 is State.Error -> response

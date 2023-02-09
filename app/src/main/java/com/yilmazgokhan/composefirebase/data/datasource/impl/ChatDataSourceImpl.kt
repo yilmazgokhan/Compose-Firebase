@@ -11,19 +11,21 @@ import javax.inject.Inject
 
 class ChatDataSourceImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
-): ChatDataSource {
+) : ChatDataSource {
     override suspend fun createChat(
         id: String,
         title: String,
         description: String,
         userId: String,
+        date: Long,
     ): State<ChatDTO> {
         return try {
             val chat = ChatDTO(
                 id = id,
                 title = title,
                 description = description,
-                userId = userId
+                userId = userId,
+                date = date
             )
             firebaseFirestore.collection(CHATS).document(id).set(chat).await()
             val chatRef = firebaseFirestore.collection(CHATS).document(id).get().await()
@@ -42,3 +44,8 @@ class ChatDataSourceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 }
+
+/*
+    firebaseFirestore.collection(CHATS).document(id).collection("id2").document().set(chat)
+    val chatRef = firebaseFirestore.collection(CHATS).document(id).collection("id2").document().get().await()
+ */

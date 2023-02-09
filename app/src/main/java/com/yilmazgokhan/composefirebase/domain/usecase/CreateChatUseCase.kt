@@ -20,7 +20,8 @@ class CreateChatUseCase @Inject constructor(
                 when (val response = chatRepository.createChat(
                     title = input?.title ?: "",
                     description = input?.description ?: "",
-                    userId = it
+                    userId = it,
+                    date = System.currentTimeMillis()
                 )) {
                     is State.Success -> response
                     is State.Error -> response

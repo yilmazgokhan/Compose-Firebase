@@ -51,6 +51,10 @@ fun CreateChatScreen(
             )
         }
     }
+
+    if (state.createdChat != null) {
+        //navigate detail
+    }
 }
 
 @Composable

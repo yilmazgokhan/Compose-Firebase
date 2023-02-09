@@ -10,6 +10,7 @@ interface ChatDataSource {
         title: String,
         description: String,
         userId: String,
+        date: Long,
     ): State<ChatDTO>
 
     suspend fun getChat(): State<Any>

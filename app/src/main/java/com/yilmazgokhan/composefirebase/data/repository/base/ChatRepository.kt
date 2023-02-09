@@ -9,6 +9,7 @@ interface ChatRepository {
         title: String,
         description: String,
         userId: String,
+        date: Long,
     ): State<Chat>
 
     suspend fun getChat(): State<Any>

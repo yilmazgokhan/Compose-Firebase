@@ -19,6 +19,7 @@ fun ChatDTO.mapModel(): Chat {
         id = id,
         title = title,
         description = description,
-        userId = userId
+        userId = userId,
+        date = date
     )
 }
