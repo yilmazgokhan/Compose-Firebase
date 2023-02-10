@@ -36,7 +36,7 @@ class ProfileViewModel @Inject constructor(
                 is State.Error -> {
                     LogUtils.d("${result.exception}")
                     result.exception.message?.let {
-                        triggerEvent(ViewEvent.SetGetUSerError(it))
+                        triggerEvent(ViewEvent.SetGetUserError(it))
                     }
                 }
             }
@@ -62,7 +62,7 @@ class ProfileViewModel @Inject constructor(
                 is State.Error -> {
                     LogUtils.d("${response.exception}")
                     response.exception.message?.let {
-                        triggerEvent(ViewEvent.SetGetUSerError(it))
+                        triggerEvent(ViewEvent.SetGetUserError(it))
                     }
                 }
             }
@@ -75,7 +75,7 @@ class ProfileViewModel @Inject constructor(
                 ViewEvent.Event -> {
                     getUser()
                 }
-                is ViewEvent.SetGetUSerError -> {
+                is ViewEvent.SetGetUserError -> {
                     setState {
                         state.copy(
                             isLoading = false,
@@ -159,7 +159,7 @@ class ProfileViewModel @Inject constructor(
 
     sealed class ViewEvent : IViewEvent {
         object Event : ViewEvent()
-        class SetGetUSerError(val value: String) : ViewEvent()
+        class SetGetUserError(val value: String) : ViewEvent()
         class SetLoading(val status: Boolean) : ViewEvent()
         class SetUser(val user: User) : ViewEvent()
         class SetName(val name: String) : ViewEvent()
