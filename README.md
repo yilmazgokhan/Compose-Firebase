@@ -12,10 +12,10 @@
 
 ## Project Structure
 
-- base: 
+- base: Base class for View, ViewModel and UseCase instances.
 - data: It contains all the data accessing and manipulating components.
-- di: 
-- domain: 
+- di: The directory will contain the classes responsible for dependency injection.
+- domain: The directory contains all rules.
 - navigation: Navigation component classes
 - presentation: View classes.
 - ui: Component classes.

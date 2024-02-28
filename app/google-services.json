@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "854786605418-bb4jv62rnhd2eij6l3h1dia0hptse96d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yilmazgokhan.composefirebase",
+            "certificate_hash": "d0391349a5ccd51797eeb118f72acf3f36aeb5fa"
+          }
+        },
+        {
           "client_id": "854786605418-peltml5envocm8j3r0ca3inpm45ngd1p.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
